@@ -5,6 +5,9 @@ import { useGSAP } from '@gsap/react'
 import Button from '../components/ui/button'
 import Help from '../components/ui/help'
 import hellofrom from '../assets/Hellofromzet.jpg'
+import uiux from '../assets/uiux.jpg'
+import appandweb from '../assets/appandweb.jpg'
+import videoediting from '../assets/videoediting.jpg'
 
 import ProcessCard from '../components/ui/process-card'
 import homepage from '../assets/HomePage.jpg'
@@ -116,7 +119,7 @@ function HomePage() {
 
                         <div className="w-full lg:w-1/2">
                             <Help
-                                image={hellofrom}
+                                image={appandweb}
                                 title="Web & App Development"
                                 description="Strategic design that positions AI products for trust and clarity."
                                 className="w-full h-full lg:min-h-[607px]"
@@ -127,14 +130,14 @@ function HomePage() {
 
                         <div className='flex w-full lg:w-1/2 text-left flex-col gap-6 lg:gap-8'>
                             <Help
-                                image={hellofrom}
+                                image={uiux}
                                 title="UX/UI design"
                                 description="Interfaces that adapt, predict, and respond intelligently."
                                 className="w-full"
                                 imageHeight="h-[250px] lg:h-[450px]"
                             />
                             <Help
-                                image={hellofrom}
+                                image={videoediting}
                                 title="Video Editing"
                                 description="Frontend + backend + AI integrations — built for performance and scalability."
                                 className="w-full"

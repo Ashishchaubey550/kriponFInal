@@ -1,39 +1,37 @@
 import React from 'react'
 import StackingCards from './StackingCards'
 
-
-import img1 from '../../assets/blacklap.png'
-import img2 from '../../assets/expereince.jpg'
-import img3 from '../../assets/Hellofromzet.jpg'
-import img4 from '../../assets/Have_an_ideo_background.jpg'
-
+import resume from '../../assets/resume.png'
+import spaa from '../../assets/spaa.png'
+import sparkluminarius from '../../assets/sparkluminarius.png'
+import dpEnter from '../../assets/dpEnter.png'
 const projects = [
     {
         id: 1,
         title: 'Transform Your Resume',
         description: 'AI-powered resume builder',
-        image: img1,
+        image: resume,
         color: '#1a1a1a'
     },
     {
         id: 2,
         title: 'Decorative Bollards',
         description: 'Design and implementation',
-        image: img2,
+        image: spaa,
         color: '#2a2a2a'
     },
     {
         id: 3,
         title: 'Discover Tranquility',
         description: 'Spa and wellness center',
-        image: img3,
+        image: sparkluminarius,
         color: '#3a3a3a'
     },
     {
         id: 4,
         title: 'Fusion Space',
         description: 'Modern login portal',
-        image: img4,
+        image: dpEnter,
         color: '#4a4a4a'
     }
 ]
