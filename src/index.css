@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+body {
+    background-color: #000000;
+    cursor: none;
+    /* Hide default cursor */
+}
+
+a,
+button,
+[role="button"] {
+    cursor: none;
+    /* Ensure it stays hidden on interactive elements */
+}
