@@ -59,7 +59,7 @@ export default function ProjectsList() {
                                 alt={project.title}
                                 className="w-full h-full object-cover"
                             />
-                            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 lg:p-12">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 lg:p-12">
                                 <h3 className="text-white text-2xl sm:text-3xl lg:text-5xl font-bold mb-2">
                                     {project.title}
                                 </h3>
