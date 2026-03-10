@@ -153,7 +153,6 @@ function HomePage() {
             ease: 'power3.out'
         })
 
-
         gsap.utils.toArray('.reveal-section').forEach(section => {
             gsap.from(section, {
                 scrollTrigger: {
@@ -179,7 +178,6 @@ function HomePage() {
 
                 <div className="relative z-20 flex flex-col items-center pt-[100px] text-center w-full px-4">
 
-
                     <div className="flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-1.5 md:px-6 md:py-2 backdrop-blur-md mb-8 lg:mb-[52px]">
                         <div className="h-1.5 w-1.5 md:h-2 md:w-2 bg-green-600 rounded-full animate-bounce"></div>
                         <span className="text-xs md:text-sm font-medium text-[#FFFFFF]">Available Now</span>
@@ -199,7 +197,7 @@ function HomePage() {
 
                     <Button className='hero-text z-10 flex h-[36px] w-[92px] whitespace-nowrap items-center justify-center rounded-[999px] bg-[linear-gradient(180deg,#8A38F5_0%,#340B73_100%)] text-white shadow-[0px_2px_2px_-1px_#0000001A,0px_4px_10px_-2px_#0000000D] backdrop-blur-[10px] hover:opacity-90 mb-[100px]'>Book Call</Button>
 
-
+                    {/* Hero Video */}
                     <div className='reveal-section w-full lg:w-[1200px] aspect-video lg:aspect-auto lg:h-[675px] bg-[#D9D9D9] mb-[100px] lg:mb-[200px] overflow-hidden relative rounded-xl lg:rounded-none'>
                         <video
                             src={HeroVideo}
@@ -210,34 +208,29 @@ function HomePage() {
                         />
                     </div>
 
-
+                    {/* About Section */}
                     <div className='reveal-section w-full mb-[100px] lg:mb-[200px]'>
-                        {/* Top Row - Label bar */}
                         <div className="flex justify-between items-center mb-0 px-6 lg:px-16 py-5 border-b border-white/10">
                             <span className="text-[11px] lg:text-[13px] tracking-[3px] uppercase text-white/40 font-medium">// About Kripon°</span>
                             <span className="text-[11px] lg:text-[13px] tracking-[3px] uppercase text-white/40 font-medium">Since 2024</span>
                         </div>
 
-                        {/* Main Two-Column Layout with vertical divider */}
                         <div className="flex flex-col lg:flex-row min-h-[480px] lg:min-h-[560px]">
-                            
-                            {/* Left Column - Black bg */}
+
+                            {/* Left Column */}
                             <div className="w-full lg:w-[55%] flex flex-col px-6 lg:px-16 py-12 lg:py-14 gap-10 relative overflow-hidden">
-                                {/* Threads Background Effect */}
                                 <div className="absolute inset-0 z-0">
-                                    <Threads 
+                                    <Threads
                                         color={[0.2235294117647059, 0.12156862745098039, 0.3803921568627451]}
                                         amplitude={1.9}
                                         distance={0}
                                         enableMouseInteraction={true}
                                     />
                                 </div>
-                                
                                 <h2 className="text-[34px] md:text-[50px] lg:text-[56px] xl:text-[62px] font-extrabold leading-[0.95] tracking-[-1px] lg:tracking-[-2px] text-white text-left uppercase italic relative z-10">
                                     Sparking Ideas,<br />
                                     Igniting Success.
                                 </h2>
-
                                 <p className="text-[11px] lg:text-[12px] leading-[22px] lg:leading-[24px] text-white/40 max-w-[480px] text-left mt-8">
                                     We envision a world where design is not decoration, but direction. A world where brands and ideas grow through clarity, consistency, and soul.
                                 </p>
@@ -246,20 +239,23 @@ function HomePage() {
                             {/* Vertical Divider */}
                             <div className="hidden lg:block w-px bg-white/10"></div>
 
-                            {/* Right Column - complete black bg */}
+                            {/* Right Column */}
                             <div className="w-full lg:w-[45%] flex flex-col px-6 lg:px-14 py-12 lg:py-14 bg-black text-left">
-                                {/* Bullet Points */}
                                 <div className="space-y-7 lg:space-y-8 flex-1">
-                                    {/* Bullet 1 */}
                                     <div className="flex items-start gap-4">
-                                        <div className="w-[6px] h-[6px] rounded-full bg-white/80 mt-[9px] flex-shrink-0"></div>
+                                        <div className="w-[6px] h-[6px] rounded-full bg-white/80 mt-[9px] shrink-0"></div>
                                         <div>
                                             <h3 className="text-white font-bold text-[16px] lg:text-[17px] leading-[22px] mb-2">Harnessing the Power of Ideas</h3>
                                             <p className="text-white/35 text-[13px] lg:text-[14px] leading-[22px]">We transform creative concepts into inspiring campaigns.</p>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
 
+                    {/* Services Cards */}
                     <div className='reveal-section flex flex-col lg:flex-row w-full lg:max-w-[975px] items-stretch lg:items-center gap-6 px-4 lg:px-4 mb-[100px] lg:mb-[200px]'>
 
                         <div className="w-full lg:w-1/2">
@@ -271,7 +267,6 @@ function HomePage() {
                                 imageHeight="h-[300px] lg:h-[607px]"
                             />
                         </div>
-
 
                         <div className='flex w-full lg:w-1/2 text-left flex-col gap-6 lg:gap-8'>
                             <Help
@@ -301,6 +296,7 @@ function HomePage() {
                     <FAQ />
                     <CallToAction />
                     <Footer />
+
                 </div>
             </div>
         </div>
