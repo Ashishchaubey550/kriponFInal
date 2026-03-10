@@ -1,16 +1,139 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>kripondigital</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ✅ SEO: Primary Meta Tags -->
+  <title>Kripon Digital | Digital Marketing Agency | SEO, Web Design & Social Media</title>
+  <meta name="title" content="Kripon Digital | Digital Marketing Agency | SEO, Web Design & Social Media" />
+  <meta name="description"
+    content="Kripon Digital is a results-driven digital marketing agency offering SEO, web design, social media marketing, PPC advertising, content marketing, branding, and UI/UX design. Grow your business online with experts." />
+  <meta name="keywords"
+    content="digital marketing agency, digital marketing, SEO services, search engine optimization, social media marketing, web design, web development, PPC advertising, Google Ads, content marketing, email marketing, branding agency, UI UX design, app development, video editing, graphic design, local SEO, ecommerce SEO, digital marketing company, online marketing, digital advertising, website design, web design agency, performance marketing, lead generation, conversion rate optimization, influencer marketing, digital strategy, brand identity, copywriting" />
+  <meta name="author" content="Kripon Digital" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow" />
+  <meta name="language" content="English" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="rating" content="general" />
+  <meta name="category" content="Digital Marketing, Web Design, SEO" />
+
+  <!-- ✅ SEO: Canonical URL -->
+  <link rel="canonical" href="https://www.kripon.in/" />
+
+  <!-- ✅ SEO: Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="apple-touch-icon" href="/vite.svg" />
+
+  <!-- ✅ SEO: Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.kripon.in/" />
+  <meta property="og:title" content="Kripon Digital | #1 Digital Marketing Agency | SEO, Web Design & Growth" />
+  <meta property="og:description"
+    content="Kripon Digital helps businesses grow online with result-driven SEO, web design, social media marketing, PPC, content marketing, and branding. Start growing today!" />
+  <meta property="og:image" content="https://www.kripon.in/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Kripon Digital" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- ✅ SEO: Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://www.kripon.in/" />
+  <meta name="twitter:title" content="Kripon Digital | Digital Marketing Agency | SEO, Web Design & Social Media" />
+  <meta name="twitter:description"
+    content="Kripon Digital is a results-driven digital marketing agency. We help brands grow with SEO, web design, social media, PPC & content marketing." />
+  <meta name="twitter:image" content="https://www.kripon.in/og-image.jpg" />
+  <meta name="twitter:site" content="@kripondigital" />
+  <meta name="twitter:creator" content="@kripondigital" />
+
+  <!-- ✅ SEO: Structured Data – Organization -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Kripon Digital",
+      "url": "https://www.kripon.in",
+      "logo": "https://www.kripon.in/vite.svg",
+      "description": "Kripon Digital is a digital marketing agency specializing in SEO, web design, social media marketing, PPC advertising, content marketing, branding, and UI/UX design.",
+      "foundingDate": "2024",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Service",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      "sameAs": [
+        "https://www.instagram.com/kripondigital",
+        "https://www.linkedin.com/company/kripondigital",
+        "https://twitter.com/kripondigital",
+        "https://www.facebook.com/kripondigital"
+      ],
+      "serviceArea": {
+        "@type": "Place",
+        "name": "Worldwide"
+      }
+    }
+    </script>
+
+  <!-- ✅ SEO: Structured Data – WebSite + SearchAction -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Kripon Digital",
+      "url": "https://www.kripon.in",
+      "description": "Digital marketing agency offering SEO, web design, social media marketing, PPC, content marketing, and branding services.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.kripon.in/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+  <!-- ✅ SEO: Structured Data – ProfessionalService (Local SEO) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Kripon Digital",
+      "url": "https://www.kripon.in",
+      "description": "Premium digital marketing agency specializing in SEO, web design, social media marketing, PPC, branding, and content creation.",
+      "priceRange": "$$",
+      "openingHours": "Mo-Su 09:00-18:00",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Digital Marketing Services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Search Engine Optimization (SEO)" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Design & Development" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Social Media Marketing" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pay-Per-Click Advertising (PPC)" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Content Marketing & Copywriting" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Branding & Graphic Design" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "UI/UX Design" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Video Editing & Production" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Email Marketing" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "App Development" } }
+        ]
+      }
+    }
+    </script>
+
+  <!-- ✅ Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
