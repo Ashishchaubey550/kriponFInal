@@ -5,11 +5,6 @@ import { useGSAP } from '@gsap/react'
 import Button from '../components/ui/button'
 import Help from '../components/ui/help'
 import hellofrom from '../assets/Hellofromzet.jpg'
-import uiux from '../assets/uiux.jpg'
-import appandweb from '../assets/appandweb.jpg'
-import videoediting from '../assets/videoediting.jpg'
-
-import ProcessCard from '../components/ui/process-card'
 import homepage from '../assets/HomePage.jpg'
 import Team from '../components/ui/Team'
 import FAQ from '../components/ui/FAQ'
@@ -18,9 +13,7 @@ import Footer from '../components/layout/Footer'
 import CustomCursor from '../components/ui/CustomCursor'
 import HeroVideo from '../assets/heroVideo.mp4'
 import ProjectsList from '../components/ui/ProjectsList'
-import Lightfall from '../components/ui/Lightfall'
 import Threads from '../components/ui/Threads'
-import OrbitalAnimation from '../components/ui/OrbitalAnimation'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -174,7 +167,13 @@ function HomePage() {
             <CustomCursor />
             <div className='relative mx-auto w-full min-h-screen'>
 
-                <img className='absolute top-[100px] h-[1500px] w-full object-cover z-0' src={homepage} alt="" />
+                <img
+                    className='absolute top-[100px] h-[1500px] w-full object-cover z-0'
+                    src={homepage}
+                    alt="Kripon Digital hero background"
+                    loading="eager"
+                    fetchPriority="high"
+                />
 
                 <div className="relative z-20 flex flex-col items-center pt-[100px] text-center w-full px-4">
 
@@ -195,17 +194,21 @@ function HomePage() {
                         </h2>
                     </div>
 
-                    <Button className='hero-text z-10 flex h-[36px] w-[92px] whitespace-nowrap items-center justify-center rounded-[999px] bg-[linear-gradient(180deg,#8A38F5_0%,#340B73_100%)] text-white shadow-[0px_2px_2px_-1px_#0000001A,0px_4px_10px_-2px_#0000000D] backdrop-blur-[10px] hover:opacity-90 mb-[100px]'>Book Call</Button>
+                    <Button aria-label="Book a call with Kripon Digital" className='hero-text z-10 flex h-[36px] w-[92px] whitespace-nowrap items-center justify-center rounded-[999px] bg-[linear-gradient(180deg,#8A38F5_0%,#340B73_100%)] text-white shadow-[0px_2px_2px_-1px_#0000001A,0px_4px_10px_-2px_#0000000D] backdrop-blur-[10px] hover:opacity-90 mb-[100px]'>Book Call</Button>
 
-                    {/* Hero Video */}
                     <div className='reveal-section w-full lg:w-[1200px] aspect-video lg:aspect-auto lg:h-[675px] bg-[#D9D9D9] mb-[100px] lg:mb-[200px] overflow-hidden relative rounded-xl lg:rounded-none'>
                         <video
                             src={HeroVideo}
                             autoPlay
                             loop
                             muted
+                            playsInline
+                            preload="none"
+                            aria-label="Kripon Digital showreel"
                             className='w-full h-full object-cover lg:scale-[1.25]'
-                        />
+                        >
+                            <track kind="captions" srcLang="en" label="English" default />
+                        </video>
                     </div>
 
                     {/* About Section */}
