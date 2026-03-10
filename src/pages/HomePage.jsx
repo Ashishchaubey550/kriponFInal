@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
@@ -14,11 +14,13 @@ import homepage from '../assets/HomePage.jpg'
 import Team from '../components/ui/Team'
 import FAQ from '../components/ui/FAQ'
 import CallToAction from '../components/ui/CallToAction'
-import ProcessSection from '../components/ui/ProcessSection'
 import Footer from '../components/layout/Footer'
 import CustomCursor from '../components/ui/CustomCursor'
 import HeroVideo from '../assets/heroVideo.mp4'
 import ProjectsList from '../components/ui/ProjectsList'
+import Lightfall from '../components/ui/Lightfall'
+import Threads from '../components/ui/Threads'
+import OrbitalAnimation from '../components/ui/OrbitalAnimation'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -27,8 +29,119 @@ import { useNavigate } from 'react-router-dom';
 function HomePage() {
     const navigate = useNavigate();
     const container = useRef()
+    const [expandedService, setExpandedService] = useState(0);
 
-
+    const services = [
+        {
+            id: 0,
+            title: 'WEB DESIGN',
+            number: '01',
+            icon: (
+                <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <rect x="4" y="6" width="24" height="20" rx="2" />
+                    <line x1="4" y1="11" x2="28" y2="11" />
+                    <circle cx="8" cy="8.5" r="0.5" fill="currentColor" />
+                    <circle cx="10" cy="8.5" r="0.5" fill="currentColor" />
+                    <circle cx="12" cy="8.5" r="0.5" fill="currentColor" />
+                </svg>
+            ),
+            description: 'We are a results-driven website design and development studio. We create highly engaging custom websites and web apps, fully optimized for SEO to...',
+            subcategories: [
+                'WEB & APP DESIGN',
+                'CONTENT MANAGEMENT',
+                'ECOMMERCE',
+                'WEBSITE HOSTING',
+                'CUSTOMER JOURNEY',
+                'LANDING PAGES',
+                'UI & UX',
+                'WEBSITE AUDITS'
+            ]
+        },
+        {
+            id: 1,
+            title: 'COMMUNICATION',
+            number: '02',
+            icon: (
+                <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M16 4L4 10L16 16L28 10L16 4Z" />
+                    <path d="M4 16L16 22L28 16" />
+                    <path d="M4 22L16 28L28 22" />
+                </svg>
+            ),
+            description: 'Strategic communication solutions that connect your brand with your audience.',
+            subcategories: [
+                'BRAND STRATEGY',
+                'CONTENT CREATION',
+                'SOCIAL MEDIA',
+                'EMAIL MARKETING',
+                'PR & OUTREACH',
+                'MESSAGING'
+            ]
+        },
+        {
+            id: 2,
+            title: 'GRAPHIC DESIGN',
+            number: '03',
+            icon: (
+                <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <circle cx="16" cy="16" r="10" />
+                    <path d="M16 6L18 14L26 16L18 18L16 26L14 18L6 16L14 14Z" />
+                </svg>
+            ),
+            description: 'Visual design that captures attention and communicates your brand essence.',
+            subcategories: [
+                'LOGO DESIGN',
+                'BRAND IDENTITY',
+                'PRINT DESIGN',
+                'PACKAGING',
+                'ILLUSTRATIONS',
+                'ICONOGRAPHY'
+            ]
+        },
+        {
+            id: 3,
+            title: 'BRANDING',
+            number: '04',
+            icon: (
+                <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M8 28L8 16L16 4L24 16L24 28" />
+                    <line x1="12" y1="20" x2="20" y2="20" />
+                    <line x1="12" y1="24" x2="20" y2="24" />
+                </svg>
+            ),
+            description: 'Complete brand identity systems that make your business memorable.',
+            subcategories: [
+                'BRAND STRATEGY',
+                'VISUAL IDENTITY',
+                'BRAND GUIDELINES',
+                'POSITIONING',
+                'NAMING',
+                'REBRANDING'
+            ]
+        },
+        {
+            id: 4,
+            title: 'COPYWRITING',
+            number: '05',
+            icon: (
+                <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <rect x="6" y="4" width="20" height="24" rx="2" />
+                    <line x1="10" y1="10" x2="22" y2="10" />
+                    <line x1="10" y1="14" x2="22" y2="14" />
+                    <line x1="10" y1="18" x2="18" y2="18" />
+                </svg>
+            ),
+            description: 'Compelling copy that tells your story and drives action.',
+            subcategories: [
+                'WEB COPY',
+                'BRAND VOICE',
+                'SEO WRITING',
+                'AD COPY',
+                'STORYTELLING',
+                'UX WRITING'
+            ]
+        }
+    ];
 
     useGSAP(() => {
 
@@ -98,28 +211,60 @@ function HomePage() {
                     </div>
 
 
-                    <div className='reveal-section flex flex-col items-center justify-center w-full lg:w-[1104px] mb-[100px] lg:mb-[150px] px-4 lg:px-0'>
-                        <Button className="w-[83px] border-2 px-[13px] py-[6px] rounded-[999px] border-solid border-[#FFFFFF] text-[#FFFFFF] backdrop-blur-2xl h-[40px] mb-6">About</Button>
-                        <div className="flex items-center justify-center w-full lg:w-[1140px] px-0 lg:px-2.5">
-                            <p className='w-full lg:w-[738px] text-center text-[#FFFFFF59] font-semibold text-xl md:text-3xl lg:text-[27px] leading-relaxed lg:leading-[42px] tracking-tight lg:tracking-[-0.56px]'>
-                                <span className='text-[#FFFFFF] opacity-100 font-semibold text-xl md:text-3xl lg:text-[26px] leading-relaxed lg:leading-[42px] tracking-tight lg:tracking-[-0.56px]'>Kripon Digital is a </span>
-                                design-driven web and app development agency crafting refined digital experiences for modern brands. We focus on detail, performance, and usability to deliver elegant, scalable, and high-impact digital solutions that help brand grow.
-                            </p>
+                    <div className='reveal-section w-full mb-[100px] lg:mb-[200px]'>
+                        {/* Top Row - Label bar */}
+                        <div className="flex justify-between items-center mb-0 px-6 lg:px-16 py-5 border-b border-white/10">
+                            <span className="text-[11px] lg:text-[13px] tracking-[3px] uppercase text-white/40 font-medium">// About Kripon°</span>
+                            <span className="text-[11px] lg:text-[13px] tracking-[3px] uppercase text-white/40 font-medium">Since 2024</span>
                         </div>
-                    </div>
 
+                        {/* Main Two-Column Layout with vertical divider */}
+                        <div className="flex flex-col lg:flex-row min-h-[480px] lg:min-h-[560px]">
+                            
+                            {/* Left Column - Black bg */}
+                            <div className="w-full lg:w-[55%] flex flex-col px-6 lg:px-16 py-12 lg:py-14 gap-10 relative overflow-hidden">
+                                {/* Threads Background Effect */}
+                                <div className="absolute inset-0 z-0">
+                                    <Threads 
+                                        color={[0.2235294117647059, 0.12156862745098039, 0.3803921568627451]}
+                                        amplitude={1.9}
+                                        distance={0}
+                                        enableMouseInteraction={true}
+                                    />
+                                </div>
+                                
+                                <h2 className="text-[34px] md:text-[50px] lg:text-[56px] xl:text-[62px] font-extrabold leading-[0.95] tracking-[-1px] lg:tracking-[-2px] text-white text-left uppercase italic relative z-10">
+                                    Sparking Ideas,<br />
+                                    Igniting Success.
+                                </h2>
 
-                    <div className='reveal-section w-full lg:w-[1104px] items-center justify-center flex flex-col mb-[40px] lg:mb-[60px] px-4 lg:px-0'>
-                        <Button className="w-[83px] border-2 px-[13px] py-[6px] rounded-[999px] border-solid border-[#FFFFFF] text-[#FFFFFF] backdrop-blur-2xl h-[40px] mb-4">Services</Button>
-                        <h2 className='text-[#FFFFFF] font-medium text-4xl md:text-6xl lg:text-[66px] leading-tight lg:leading-[84px] tracking-tight lg:tracking-[-3.5px] text-center'>How we can help</h2>
-                    </div>
+                                <p className="text-[11px] lg:text-[12px] leading-[22px] lg:leading-[24px] text-white/40 max-w-[480px] text-left mt-8">
+                                    We envision a world where design is not decoration, but direction. A world where brands and ideas grow through clarity, consistency, and soul.
+                                </p>
+                            </div>
+
+                            {/* Vertical Divider */}
+                            <div className="hidden lg:block w-px bg-white/10"></div>
+
+                            {/* Right Column - complete black bg */}
+                            <div className="w-full lg:w-[45%] flex flex-col px-6 lg:px-14 py-12 lg:py-14 bg-black text-left">
+                                {/* Bullet Points */}
+                                <div className="space-y-7 lg:space-y-8 flex-1">
+                                    {/* Bullet 1 */}
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-[6px] h-[6px] rounded-full bg-white/80 mt-[9px] flex-shrink-0"></div>
+                                        <div>
+                                            <h3 className="text-white font-bold text-[16px] lg:text-[17px] leading-[22px] mb-2">Harnessing the Power of Ideas</h3>
+                                            <p className="text-white/35 text-[13px] lg:text-[14px] leading-[22px]">We transform creative concepts into inspiring campaigns.</p>
+                                        </div>
+                                    </div>
 
 
                     <div className='reveal-section flex flex-col lg:flex-row w-full lg:max-w-[975px] items-stretch lg:items-center gap-6 px-4 lg:px-4 mb-[100px] lg:mb-[200px]'>
 
                         <div className="w-full lg:w-1/2">
                             <Help
-                                image={appandweb}
+                                image={hellofrom}
                                 title="Web & App Development"
                                 description="Strategic design that positions AI products for trust and clarity."
                                 className="w-full h-full lg:min-h-[607px]"
@@ -130,14 +275,14 @@ function HomePage() {
 
                         <div className='flex w-full lg:w-1/2 text-left flex-col gap-6 lg:gap-8'>
                             <Help
-                                image={uiux}
+                                image={hellofrom}
                                 title="UX/UI design"
                                 description="Interfaces that adapt, predict, and respond intelligently."
                                 className="w-full"
                                 imageHeight="h-[250px] lg:h-[450px]"
                             />
                             <Help
-                                image={videoediting}
+                                image={hellofrom}
                                 title="Video Editing"
                                 description="Frontend + backend + AI integrations — built for performance and scalability."
                                 className="w-full"
@@ -151,10 +296,6 @@ function HomePage() {
                     <Button onClick={() => navigate('/projects')} className='z-10 flex h-[48px] px-8 whitespace-nowrap items-center justify-center rounded-[999px] bg-[#6925C0] text-white font-medium hover:opacity-90 mb-[100px] lg:mb-[150px]'>
                         More Projects
                     </Button>
-
-
-
-                    <ProcessSection />
 
                     <Team />
                     <FAQ />
