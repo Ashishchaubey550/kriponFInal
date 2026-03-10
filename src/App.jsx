@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import './App.css'
 import Header from './components/layout/Header'
 import HomePage from './pages/HomePage'
@@ -22,7 +23,8 @@ function App() {
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </BrowserRouter>
-      </div >
+        <Analytics />
+      </div>
     </>
   )
 }
