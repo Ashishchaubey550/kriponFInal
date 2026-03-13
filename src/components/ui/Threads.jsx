@@ -120,7 +120,7 @@ void main() {
 }
 `;
 
-const Threads = ({ color = [1, 1, 1], amplitude = 1, distance = 0, enableMouseInteraction = false, ...rest }) => {
+const Threads = ({ color = [1, 1, 1], amplitude = 1, distance = 0, enableMouseInteraction = false, maxFps = 45, ...rest }) => {
   const containerRef = useRef(null);
   const animationFrameId = useRef();
 
@@ -128,7 +128,8 @@ const Threads = ({ color = [1, 1, 1], amplitude = 1, distance = 0, enableMouseIn
     if (!containerRef.current) return;
     const container = containerRef.current;
 
-    const renderer = new Renderer({ alpha: true });
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const renderer = new Renderer({ alpha: true, dpr });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
@@ -158,30 +159,81 @@ const Threads = ({ color = [1, 1, 1], amplitude = 1, distance = 0, enableMouseIn
       renderer.setSize(clientWidth, clientHeight);
       program.uniforms.iResolution.value.r = clientWidth;
       program.uniforms.iResolution.value.g = clientHeight;
-      program.uniforms.iResolution.value.b = clientWidth / clientHeight;
+      program.uniforms.iResolution.value.b = clientWidth / Math.max(clientHeight, 1);
     }
     window.addEventListener('resize', resize);
     resize();
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const supportsHoverPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const canUseMouse = enableMouseInteraction && supportsHoverPointer;
 
     let currentMouse = [0.5, 0.5];
     let targetMouse = [0.5, 0.5];
 
     function handleMouseMove(e) {
-      const rect = container.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = 1.0 - (e.clientY - rect.top) / rect.height;
+      const w = Math.max(container.clientWidth, 1);
+      const h = Math.max(container.clientHeight, 1);
+      const x = Math.min(Math.max(e.offsetX / w, 0), 1);
+      const y = 1.0 - Math.min(Math.max(e.offsetY / h, 0), 1);
       targetMouse = [x, y];
     }
     function handleMouseLeave() {
       targetMouse = [0.5, 0.5];
     }
-    if (enableMouseInteraction) {
-      container.addEventListener('mousemove', handleMouseMove);
+    if (canUseMouse) {
+      container.addEventListener('mousemove', handleMouseMove, { passive: true });
       container.addEventListener('mouseleave', handleMouseLeave);
     }
 
+    let isInViewport = true;
+    let lastFrameTime = 0;
+    const frameInterval = 1000 / Math.max(maxFps, 1);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInViewport = entry.isIntersecting;
+
+        if (!isInViewport && animationFrameId.current) {
+          cancelAnimationFrame(animationFrameId.current);
+          animationFrameId.current = null;
+          return;
+        }
+
+        if (isInViewport && !animationFrameId.current && !document.hidden && !reducedMotion) {
+          animationFrameId.current = requestAnimationFrame(update);
+        }
+      },
+      { threshold: 0.01 }
+    );
+    observer.observe(container);
+
+    function handleVisibilityChange() {
+      if (document.hidden && animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+        animationFrameId.current = null;
+        return;
+      }
+
+      if (!document.hidden && isInViewport && !animationFrameId.current && !reducedMotion) {
+        animationFrameId.current = requestAnimationFrame(update);
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     function update(t) {
-      if (enableMouseInteraction) {
+      if (document.hidden || !isInViewport) {
+        animationFrameId.current = null;
+        return;
+      }
+
+      if (t - lastFrameTime < frameInterval) {
+        animationFrameId.current = requestAnimationFrame(update);
+        return;
+      }
+      lastFrameTime = t;
+
+      if (canUseMouse) {
         const smoothing = 0.05;
         currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
         currentMouse[1] += smoothing * (targetMouse[1] - currentMouse[1]);
@@ -196,13 +248,21 @@ const Threads = ({ color = [1, 1, 1], amplitude = 1, distance = 0, enableMouseIn
       renderer.render({ scene: mesh });
       animationFrameId.current = requestAnimationFrame(update);
     }
-    animationFrameId.current = requestAnimationFrame(update);
+
+    if (reducedMotion) {
+      program.uniforms.iTime.value = 0;
+      renderer.render({ scene: mesh });
+    } else {
+      animationFrameId.current = requestAnimationFrame(update);
+    }
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      observer.disconnect();
 
-      if (enableMouseInteraction) {
+      if (canUseMouse) {
         container.removeEventListener('mousemove', handleMouseMove);
         container.removeEventListener('mouseleave', handleMouseLeave);
       }

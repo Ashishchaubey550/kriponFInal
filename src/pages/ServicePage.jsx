@@ -7,6 +7,7 @@ import Footer from '../components/layout/Footer'
 import CustomCursor from '../components/ui/CustomCursor'
 import Help from '../components/ui/help'
 import BenefitsSection from '../components/ui/BenefitsSection'
+import SeoMeta from '../components/ui/SeoMeta'
 
 
 import hellofrom from '../assets/Hellofromzet.jpg'
@@ -18,39 +19,47 @@ const services = [
     {
         title: "Web Development",
         description: "We design and develop unique, user-centric, and high-performance websites tailored to your brand and business goals.",
-        image: homepage
+        image: homepage,
+        serviceKey: "web-dev"
     },
     {
         title: "App Development",
         description: "From concept to launch, we build user-friendly and scalable mobile applications with clean design and robust functionality.",
-        image: hellofrom
+        image: hellofrom,
+        serviceKey: "app-dev"
     },
     {
         title: "Stock Market Dashboard",
         description: "We develop custom stock market dashboards for algorithm trading platforms, focusing on real-time data visualization, performance tracking, and user-friendly interfaces.",
-        image: homepage
+        image: homepage,
+        serviceKey: "other"
     },
     {
         title: "Forex Trading Systems",
         description: "We create solutions, forex trading systems with smart dashboards, strategy integrators, and automation-ready architecture for seamless trading operations.",
-        image: hellofrom
+        image: hellofrom,
+        serviceKey: "other"
     },
     {
         title: "UI/UX Design",
         description: "We design intuitive user interfaces that are focused on usability, clarity, and engaging digital experiences.",
-        image: homepage
+        image: homepage,
+        serviceKey: "design"
     },
     {
         title: "Video Editing",
         description: "Professional video editing services to enhance your brand's visual presence across digital platforms.",
-        image: hellofrom
+        image: hellofrom,
+        serviceKey: "other"
     }
 ]
 
 function ServicePage() {
     const container = useRef()
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     useGSAP(() => {
+        if (prefersReducedMotion) return
 
         gsap.from('.hero-text', {
             y: 50,
@@ -65,6 +74,7 @@ function ServicePage() {
             scrollTrigger: {
                 trigger: '.service-grid',
                 start: 'top 80%',
+                once: true
             },
             y: 50,
             opacity: 0,
@@ -73,10 +83,16 @@ function ServicePage() {
             ease: 'power3.out'
         })
 
-    }, { scope: container })
+    }, { scope: container, dependencies: [prefersReducedMotion] })
 
     return (
         <div ref={container} className="bg-black min-h-screen text-white">
+            <SeoMeta
+                title="Services"
+                description="Explore Kripon Digital services: web development, app development, UI/UX, dashboards, forex systems, and video editing for India, Nepal and Bhutan."
+                path="/services"
+                keywords="web development services India, app development Nepal, UI UX services Bhutan, digital product studio South Asia"
+            />
             <CustomCursor />
 
             <div className="relative mx-auto w-full max-w-screen-xl lg:max-w-[1440px] px-4 md:px-8 lg:px-[64px] pt-[100px] lg:pt-[150px]">
@@ -100,6 +116,7 @@ function ServicePage() {
                                 image={service.image}
                                 title={service.title}
                                 description={service.description}
+                                serviceKey={service.serviceKey}
                                 className="w-full"
                                 imageHeight="h-[250px] md:h-[300px] lg:h-[350px]"
                             />

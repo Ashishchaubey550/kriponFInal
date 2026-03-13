@@ -8,22 +8,22 @@ const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const url = [
+        { name: "Services", href: "/services", action: () => { navigate('/services'); setIsMenuOpen(false); } },
+        { name: "Work", href: "/projects", action: () => { navigate('/projects'); setIsMenuOpen(false); } },
         { name: "About", href: "/about", action: () => { navigate('/about'); setIsMenuOpen(false); } },
-        { name: "Service", href: "/services", action: () => { navigate('/services'); setIsMenuOpen(false); } },
-        { name: "Project", href: "/projects", action: () => { navigate('/projects'); setIsMenuOpen(false); } },
         { name: "Contact", href: "/contact", action: () => { navigate('/contact'); setIsMenuOpen(false); } },
     ]
 
     return (
-        <div className="mx-auto mt-2.5 w-full max-w-[1440px] px-4 md:px-[64px] z-50 flex items-center justify-center relative">
-            <header className="h-[67px] w-[90%] md:w-fit md:min-w-[686px] justify-between absolute left-1/2 top-10 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/20 bg-black/50 pt-[12px] pb-[12px] pl-[24px] pr-[24px] backdrop-blur-md z-50">
+        <div className="mx-auto mt-2.5 w-full max-w-[1540px] px-4 md:px-8 lg:px-12 z-50 flex items-center justify-center relative">
+            <header className="h-[67px] w-[93%] lg:w-[88%] max-w-[1160px] justify-between absolute left-1/2 top-10 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/20 bg-black/55 py-3 px-5 lg:px-7 backdrop-blur-md z-50 shadow-[0_8px_30px_-20px_rgba(255,255,255,0.25)]">
                 <div className="text-xl font-bold flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')} >
                     <img src={logo} alt="logo" className="h-[30px] w-[34px] md:h-[41.29px] md:w-[46px]" />
                     <h1><span className="text-[#FFFFFF]">Kripon</span><span className="text-[#848483]">Digital</span></h1>
                 </div>
 
 
-                <nav className="hidden md:flex gap-8">
+                <nav className="hidden md:flex gap-6 lg:gap-7">
                     {url.map((item) => (
                         <button
                             key={item.name}

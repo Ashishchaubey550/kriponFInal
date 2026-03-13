@@ -6,130 +6,159 @@ function CustomCursor() {
     const container = useRef(null)
     const cursorRef = useRef(null)
     const cursorTextRef = useRef(null)
+    const [isEnabled, setIsEnabled] = useState(false)
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)')
+        const applyState = () => setIsEnabled(mediaQuery.matches)
+
+        applyState()
+        mediaQuery.addEventListener('change', applyState)
+
+        return () => mediaQuery.removeEventListener('change', applyState)
+    }, [])
 
     useGSAP(() => {
+        if (!isEnabled || !cursorRef.current) return
 
         gsap.set(cursorRef.current, { xPercent: -50, yPercent: -50, scale: 1 })
+        const moveX = gsap.quickTo(cursorRef.current, 'x', { duration: 0.12, ease: 'power2.out' })
+        const moveY = gsap.quickTo(cursorRef.current, 'y', { duration: 0.12, ease: 'power2.out' })
 
         const onMouseMove = (e) => {
             const { clientX, clientY } = e
-            gsap.to(cursorRef.current, {
-                x: clientX,
-                y: clientY,
-                duration: 0.15,
-                ease: "power2.out"
-            })
+            moveX(clientX)
+            moveY(clientY)
         }
 
-        window.addEventListener('mousemove', onMouseMove)
+        window.addEventListener('mousemove', onMouseMove, { passive: true })
         return () => window.removeEventListener('mousemove', onMouseMove)
-    }, { scope: container })
+    }, { dependencies: [isEnabled], scope: container })
 
     useEffect(() => {
-        const onMouseEnter = (e) => {
-            const target = e.target
-            const cursorText = target.getAttribute('data-cursor-text')
+        if (!isEnabled || !cursorRef.current || !cursorTextRef.current) return
 
+        const interactiveSelector = 'a, button, [role="button"], .interactive'
+        const formControlSelector = 'input, textarea, select'
+
+        const showInteractiveCursor = (cursorText = '') => {
             if (cursorText) {
-                cursorTextRef.current.innerText = cursorText
+                cursorTextRef.current.textContent = cursorText
                 gsap.to(cursorRef.current, {
                     width: 80,
                     height: 80,
-                    duration: 0.3,
-                    ease: "back.out(1.7)",
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                    mixBlendMode: "normal"
+                    duration: 0.22,
+                    ease: 'back.out(1.6)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    mixBlendMode: 'normal'
                 })
-                gsap.to(cursorTextRef.current, {
-                    opacity: 1,
-                    scale: 1,
-                    duration: 0.3
-                })
-            } else {
-                gsap.to(cursorRef.current, {
-                    scale: 3,
-                    duration: 0.2,
-                    ease: "back.out(1.7)",
-                    backgroundColor: "rgba(140, 50, 255, 0.5)"
-                })
+                gsap.to(cursorTextRef.current, { opacity: 1, scale: 1, duration: 0.18 })
+                return
             }
+
+            cursorTextRef.current.textContent = ''
+            gsap.to(cursorRef.current, {
+                scale: 2.3,
+                duration: 0.18,
+                ease: 'power2.out',
+                backgroundColor: 'rgba(140, 50, 255, 0.5)'
+            })
+            gsap.to(cursorTextRef.current, { opacity: 0, scale: 0.6, duration: 0.14 })
         }
 
-        const onMouseLeave = () => {
-            cursorTextRef.current.innerText = ""
+        const hideInteractiveCursor = () => {
+            cursorTextRef.current.textContent = ''
             gsap.to(cursorRef.current, {
                 scale: 1,
                 width: 20,
                 height: 20,
-                duration: 0.2,
-                ease: "power2.out",
-                backgroundColor: "#8C32FF",
-                mixBlendMode: "exclusion"
+                duration: 0.16,
+                ease: 'power2.out',
+                backgroundColor: '#8C32FF',
+                mixBlendMode: 'exclusion'
             })
-            gsap.to(cursorTextRef.current, {
-                opacity: 0,
-                scale: 0.5,
-                duration: 0.2
+            gsap.to(cursorTextRef.current, { opacity: 0, scale: 0.5, duration: 0.14 })
+        }
+
+        const hideCursorForTyping = () => {
+            gsap.to(cursorRef.current, {
+                autoAlpha: 0,
+                scale: 0.4,
+                duration: 0.14,
+                ease: 'power2.out'
             })
         }
 
+        const showCursorAfterTyping = () => {
+            gsap.to(cursorRef.current, {
+                autoAlpha: 0.85,
+                scale: 1,
+                duration: 0.16,
+                ease: 'power2.out'
+            })
+        }
 
-        const targets = document.querySelectorAll('a, button, input, textarea, [role="button"], .interactive')
+        const onMouseOver = (e) => {
+            const interactiveEl = e.target.closest(interactiveSelector)
+            if (!interactiveEl) return
+            const cursorText = interactiveEl.getAttribute('data-cursor-text')
+            showInteractiveCursor(cursorText || '')
+        }
 
-        targets.forEach(el => {
-            el.addEventListener('mouseenter', onMouseEnter)
-            el.addEventListener('mouseleave', onMouseLeave)
-        })
+        const onMouseOut = (e) => {
+            const fromInteractive = e.target.closest(interactiveSelector)
+            if (!fromInteractive) return
 
+            const toEl = e.relatedTarget
+            if (toEl && toEl.closest?.(interactiveSelector)) return
+            hideInteractiveCursor()
+        }
+
+        const onMouseOverFormControl = (e) => {
+            if (!e.target.closest(formControlSelector)) return
+            hideCursorForTyping()
+        }
+
+        const onMouseOutFormControl = (e) => {
+            if (!e.target.closest(formControlSelector)) return
+            const toEl = e.relatedTarget
+            if (toEl && toEl.closest?.(formControlSelector)) return
+            showCursorAfterTyping()
+        }
+
+        const onFocusIn = (e) => {
+            if (!e.target.closest(formControlSelector)) return
+            hideCursorForTyping()
+        }
+
+        const onFocusOut = (e) => {
+            if (!e.target.closest(formControlSelector)) return
+            showCursorAfterTyping()
+        }
+
+        window.addEventListener('mouseover', onMouseOver)
+        window.addEventListener('mouseout', onMouseOut)
+        window.addEventListener('mouseover', onMouseOverFormControl)
+        window.addEventListener('mouseout', onMouseOutFormControl)
+        window.addEventListener('focusin', onFocusIn)
+        window.addEventListener('focusout', onFocusOut)
 
         return () => {
-            targets.forEach(el => {
-                el.removeEventListener('mouseenter', onMouseEnter)
-                el.removeEventListener('mouseleave', onMouseLeave)
-            })
+            window.removeEventListener('mouseover', onMouseOver)
+            window.removeEventListener('mouseout', onMouseOut)
+            window.removeEventListener('mouseover', onMouseOverFormControl)
+            window.removeEventListener('mouseout', onMouseOutFormControl)
+            window.removeEventListener('focusin', onFocusIn)
+            window.removeEventListener('focusout', onFocusOut)
         }
-    }, [])
+    }, [isEnabled])
 
-    // Optional: Add a MutationObserver to handle dynamically added buttons
     useEffect(() => {
-        const handleEnter = (e) => {
-            const cursorText = e.target.getAttribute('data-cursor-text')
-            if (cursorText) {
-                cursorTextRef.current.innerText = cursorText
-                gsap.to(cursorRef.current, {
-                    width: 80,
-                    height: 80,
-                    duration: 0.3,
-                    ease: "back.out(1.7)",
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                    mixBlendMode: "normal"
-                })
-                gsap.to(cursorTextRef.current, { opacity: 1, scale: 1 })
-            } else {
-                gsap.to(cursorRef.current, { scale: 3, duration: 0.2, ease: "back.out(1.7)", backgroundColor: "rgba(140, 50, 255, 0.5)" })
-            }
-        }
+        document.body.classList.toggle('custom-cursor-enabled', isEnabled)
+        return () => document.body.classList.remove('custom-cursor-enabled')
+    }, [isEnabled])
 
-        const handleLeave = () => {
-            cursorTextRef.current.innerText = ""
-            gsap.to(cursorRef.current, { scale: 1, width: 20, height: 20, backgroundColor: "#8C32FF", mixBlendMode: "exclusion" })
-            gsap.to(cursorTextRef.current, { opacity: 0, scale: 0.5 })
-        }
-
-        const observer = new MutationObserver((mutations) => {
-            const targets = document.querySelectorAll('.interactive')
-            targets.forEach(el => {
-                el.removeEventListener('mouseenter', handleEnter)
-                el.removeEventListener('mouseleave', handleLeave)
-                el.addEventListener('mouseenter', handleEnter)
-                el.addEventListener('mouseleave', handleLeave)
-            })
-        })
-
-        observer.observe(document.body, { childList: true, subtree: true })
-
-        return () => observer.disconnect()
-    }, [])
+    if (!isEnabled) return null
 
     return (
         <div ref={container} className="pointer-events-none fixed top-0 left-0 z-[9999] mix-blend-exclusion">

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
@@ -14,6 +14,7 @@ import CustomCursor from '../components/ui/CustomCursor'
 import HeroVideo from '../assets/heroVideo.mp4'
 import ProjectsList from '../components/ui/ProjectsList'
 import Threads from '../components/ui/Threads'
+import SeoMeta from '../components/ui/SeoMeta'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -22,121 +23,10 @@ import { useNavigate } from 'react-router-dom';
 function HomePage() {
     const navigate = useNavigate();
     const container = useRef()
-    const [expandedService, setExpandedService] = useState(0);
-
-    const services = [
-        {
-            id: 0,
-            title: 'WEB DESIGN',
-            number: '01',
-            icon: (
-                <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <rect x="4" y="6" width="24" height="20" rx="2" />
-                    <line x1="4" y1="11" x2="28" y2="11" />
-                    <circle cx="8" cy="8.5" r="0.5" fill="currentColor" />
-                    <circle cx="10" cy="8.5" r="0.5" fill="currentColor" />
-                    <circle cx="12" cy="8.5" r="0.5" fill="currentColor" />
-                </svg>
-            ),
-            description: 'We are a results-driven website design and development studio. We create highly engaging custom websites and web apps, fully optimized for SEO to...',
-            subcategories: [
-                'WEB & APP DESIGN',
-                'CONTENT MANAGEMENT',
-                'ECOMMERCE',
-                'WEBSITE HOSTING',
-                'CUSTOMER JOURNEY',
-                'LANDING PAGES',
-                'UI & UX',
-                'WEBSITE AUDITS'
-            ]
-        },
-        {
-            id: 1,
-            title: 'COMMUNICATION',
-            number: '02',
-            icon: (
-                <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M16 4L4 10L16 16L28 10L16 4Z" />
-                    <path d="M4 16L16 22L28 16" />
-                    <path d="M4 22L16 28L28 22" />
-                </svg>
-            ),
-            description: 'Strategic communication solutions that connect your brand with your audience.',
-            subcategories: [
-                'BRAND STRATEGY',
-                'CONTENT CREATION',
-                'SOCIAL MEDIA',
-                'EMAIL MARKETING',
-                'PR & OUTREACH',
-                'MESSAGING'
-            ]
-        },
-        {
-            id: 2,
-            title: 'GRAPHIC DESIGN',
-            number: '03',
-            icon: (
-                <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <circle cx="16" cy="16" r="10" />
-                    <path d="M16 6L18 14L26 16L18 18L16 26L14 18L6 16L14 14Z" />
-                </svg>
-            ),
-            description: 'Visual design that captures attention and communicates your brand essence.',
-            subcategories: [
-                'LOGO DESIGN',
-                'BRAND IDENTITY',
-                'PRINT DESIGN',
-                'PACKAGING',
-                'ILLUSTRATIONS',
-                'ICONOGRAPHY'
-            ]
-        },
-        {
-            id: 3,
-            title: 'BRANDING',
-            number: '04',
-            icon: (
-                <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M8 28L8 16L16 4L24 16L24 28" />
-                    <line x1="12" y1="20" x2="20" y2="20" />
-                    <line x1="12" y1="24" x2="20" y2="24" />
-                </svg>
-            ),
-            description: 'Complete brand identity systems that make your business memorable.',
-            subcategories: [
-                'BRAND STRATEGY',
-                'VISUAL IDENTITY',
-                'BRAND GUIDELINES',
-                'POSITIONING',
-                'NAMING',
-                'REBRANDING'
-            ]
-        },
-        {
-            id: 4,
-            title: 'COPYWRITING',
-            number: '05',
-            icon: (
-                <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <rect x="6" y="4" width="20" height="24" rx="2" />
-                    <line x1="10" y1="10" x2="22" y2="10" />
-                    <line x1="10" y1="14" x2="22" y2="14" />
-                    <line x1="10" y1="18" x2="18" y2="18" />
-                </svg>
-            ),
-            description: 'Compelling copy that tells your story and drives action.',
-            subcategories: [
-                'WEB COPY',
-                'BRAND VOICE',
-                'SEO WRITING',
-                'AD COPY',
-                'STORYTELLING',
-                'UX WRITING'
-            ]
-        }
-    ];
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     useGSAP(() => {
+        if (prefersReducedMotion) return
 
         gsap.from('.hero-text', {
             y: 100,
@@ -151,7 +41,7 @@ function HomePage() {
                 scrollTrigger: {
                     trigger: section,
                     start: 'top 80%',
-                    toggleActions: 'play none none reverse'
+                    once: true
                 },
                 y: 50,
                 opacity: 0,
@@ -160,10 +50,29 @@ function HomePage() {
             })
         })
 
-    }, { scope: container })
+    }, { scope: container, dependencies: [prefersReducedMotion] })
 
     return (
         <div ref={container}>
+            <SeoMeta
+                title="Digital Agency for India, Nepal and Bhutan"
+                description="Kripon Digital builds high-performance websites, apps, UI/UX and growth-focused digital experiences for brands in India, Nepal and Bhutan."
+                path="/"
+                keywords="digital agency India, web development India, app development Nepal, UI UX Bhutan, SEO and design agency South Asia"
+                schema={{
+                    '@context': 'https://schema.org',
+                    '@type': 'WebPage',
+                    name: 'Kripon Digital Home',
+                    url: 'https://www.kripon.in/',
+                    description: 'Kripon Digital builds websites, apps and growth systems for brands in India, Nepal and Bhutan.',
+                    inLanguage: 'en',
+                    about: ['Web Development', 'App Development', 'UI/UX Design', 'Digital Growth'],
+                    audience: {
+                        '@type': 'Audience',
+                        geographicArea: ['India', 'Nepal', 'Bhutan']
+                    }
+                }}
+            />
             <CustomCursor />
             <div className='relative mx-auto w-full min-h-screen'>
 
@@ -298,10 +207,10 @@ function HomePage() {
                     <Team />
                     <FAQ />
                     <CallToAction />
-                    <Footer />
 
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

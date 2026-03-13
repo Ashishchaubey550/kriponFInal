@@ -6,13 +6,17 @@ import { useGSAP } from '@gsap/react'
 import Button from '../components/ui/button'
 import Footer from '../components/layout/Footer'
 import CustomCursor from '../components/ui/CustomCursor'
+import SeoMeta from '../components/ui/SeoMeta'
 
 gsap.registerPlugin(ScrollTrigger)
 
 function AboutPage() {
     const container = useRef()
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     useGSAP(() => {
+        if (prefersReducedMotion) return
+
         gsap.from('.hero-text', {
             y: 100,
             opacity: 0,
@@ -26,7 +30,7 @@ function AboutPage() {
                 scrollTrigger: {
                     trigger: section,
                     start: 'top 80%',
-                    toggleActions: 'play none none reverse'
+                    once: true
                 },
                 y: 50,
                 opacity: 0,
@@ -34,7 +38,7 @@ function AboutPage() {
                 ease: 'power3.out'
             })
         })
-    }, { scope: container })
+    }, { scope: container, dependencies: [prefersReducedMotion] })
 
     const coreValues = [
         "Custom web design",
@@ -47,6 +51,12 @@ function AboutPage() {
 
     return (
         <div ref={container} className="bg-black min-h-screen text-white">
+            <SeoMeta
+                title="About Kripon Digital"
+                description="Learn about Kripon Digital, our design-first process, and how we help brands across India, Nepal and Bhutan grow online."
+                path="/about"
+                keywords="about digital agency India, Kripon Digital team, Nepal Bhutan website partner"
+            />
             <CustomCursor />
 
             <div className="relative mx-auto w-full max-w-screen-xl lg:max-w-[1440px] px-4 md:px-8 lg:px-[64px] pt-[100px] lg:pt-[150px]">
