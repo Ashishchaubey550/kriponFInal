@@ -7,10 +7,8 @@ import SeoMeta from '../components/ui/SeoMeta'
 import { trackLeadConversion } from '../lib/analytics'
 
 function ContactPage() {
-    const formSubmitEndpoint = import.meta.env.VITE_FORMSUBMIT_ENDPOINT || 'https://formsubmit.co/ajax/ashish550chaubey@gmail.com'
-    const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
-    const formEndpoint = web3FormsAccessKey ? 'https://api.web3forms.com/submit' : formSubmitEndpoint
-    const isWeb3Forms = Boolean(web3FormsAccessKey)
+    const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '831cd623-f6ff-4d74-bff9-bcf06b31e10c'
+    const formEndpoint = 'https://api.web3forms.com/submit'
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [status, setStatus] = useState('idle')
     const [errorMessage, setErrorMessage] = useState('')
@@ -36,19 +34,68 @@ function ContactPage() {
         const form = event.currentTarget
         const formData = new FormData(form)
 
-        if (isWeb3Forms) {
-            formData.append('access_key', web3FormsAccessKey)
-            formData.append('subject', 'New Contact Form Lead - Kripon Digital')
-            formData.append('from_name', 'Kripon Digital Website')
+        const name = String(formData.get('name') || '').trim()
+        const email = String(formData.get('email') || '').trim()
+        const preferredDate = String(formData.get('Preferred Call Date') || '').trim()
+        const timeSlot = String(formData.get('Preferred Time Slot') || '').trim()
+        const service = String(formData.get('service') || '').trim()
+        const message = String(formData.get('message') || '').trim()
+        const customRequirement = String(formData.get('custom_service_requirement') || '').trim()
+
+        const serviceLabelMap = {
+            'web-dev': 'Web Development',
+            'app-dev': 'App Development',
+            'design': 'UI/UX Design',
+            'marketing': 'Marketing',
+            'other': 'Other (Custom Requirement)'
+        }
+
+        const serviceLabel = serviceLabelMap[service] || service
+        const submittedAt = new Date().toLocaleString('en-IN', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        })
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local Time'
+        const sourceUrl = window.location.href
+
+        const leadSummary = [
+            `Lead: ${name}`,
+            `Email: ${email}`,
+            `Service: ${serviceLabel}`,
+            `Preferred Call: ${preferredDate} | ${timeSlot}`,
+            `Submitted: ${submittedAt} (${timezone})`,
+            `Source: ${sourceUrl}`
+        ].join('\n')
+
+        const submissionPayload = {
+            access_key: web3FormsAccessKey,
+            subject: `New Lead: ${serviceLabel} - ${name || 'Website Inquiry'}`,
+            from_name: 'Kripon Digital Website',
+            replyto: email,
+            'Client Name': name,
+            'Client Email': email,
+            Service: serviceLabel,
+            'Preferred Call Date': preferredDate,
+            'Preferred Time Slot': timeSlot,
+            'Lead Summary': leadSummary,
+            'Project Brief': message
+        }
+
+        if (service === 'other' && customRequirement) {
+            submissionPayload['Custom Requirement'] = customRequirement
         }
 
         try {
             const response = await fetch(formEndpoint, {
                 method: 'POST',
                 headers: {
-                    Accept: 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: formData
+                body: JSON.stringify(submissionPayload)
             })
 
             let result = {}
@@ -58,9 +105,7 @@ function ContactPage() {
                 result = {}
             }
 
-            const wasSuccessful = isWeb3Forms
-                ? Boolean(result.success)
-                : (response.ok && result.success !== 'false')
+            const wasSuccessful = Boolean(result.success)
 
             if (!response.ok || !wasSuccessful) {
                 throw new Error(result.message || 'Something went wrong while sending your message.')
@@ -68,9 +113,9 @@ function ContactPage() {
 
             trackLeadConversion({
                 pagePath: window.location.pathname,
-                service: formData.get('service'),
-                preferredDate: formData.get('Preferred Call Date'),
-                timeSlot: formData.get('Preferred Time Slot')
+                service,
+                preferredDate,
+                timeSlot
             })
 
             form.reset()
@@ -124,11 +169,6 @@ function ContactPage() {
                         className="w-full flex flex-col gap-6"
                         onSubmit={handleSubmit}
                     >
-                        <input type="hidden" name="_subject" value="New Contact Form Lead - Kripon Digital" />
-                        <input type="hidden" name="_template" value="table" />
-                        <input type="hidden" name="_captcha" value="false" />
-                        <input type="text" name="_honey" className="hidden" tabIndex="-1" autoComplete="off" />
-
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="flex flex-col gap-2">
                                 <label htmlFor="name" className="text-sm font-medium text-gray-400 ml-1">Name</label>
