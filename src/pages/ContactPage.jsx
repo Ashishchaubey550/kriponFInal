@@ -7,7 +7,10 @@ import SeoMeta from '../components/ui/SeoMeta'
 import { trackLeadConversion } from '../lib/analytics'
 
 function ContactPage() {
-    const formEndpoint = import.meta.env.VITE_FORMSUBMIT_ENDPOINT || 'https://formsubmit.co/ajax/ashish550chaubey@gmail.com'
+    const formSubmitEndpoint = import.meta.env.VITE_FORMSUBMIT_ENDPOINT || 'https://formsubmit.co/ajax/ashish550chaubey@gmail.com'
+    const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+    const formEndpoint = web3FormsAccessKey ? 'https://api.web3forms.com/submit' : formSubmitEndpoint
+    const isWeb3Forms = Boolean(web3FormsAccessKey)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [status, setStatus] = useState('idle')
     const [errorMessage, setErrorMessage] = useState('')
@@ -33,6 +36,12 @@ function ContactPage() {
         const form = event.currentTarget
         const formData = new FormData(form)
 
+        if (isWeb3Forms) {
+            formData.append('access_key', web3FormsAccessKey)
+            formData.append('subject', 'New Contact Form Lead - Kripon Digital')
+            formData.append('from_name', 'Kripon Digital Website')
+        }
+
         try {
             const response = await fetch(formEndpoint, {
                 method: 'POST',
@@ -42,9 +51,18 @@ function ContactPage() {
                 body: formData
             })
 
-            const result = await response.json()
+            let result = {}
+            try {
+                result = await response.json()
+            } catch {
+                result = {}
+            }
 
-            if (!response.ok || result.success === 'false') {
+            const wasSuccessful = isWeb3Forms
+                ? Boolean(result.success)
+                : (response.ok && result.success !== 'false')
+
+            if (!response.ok || !wasSuccessful) {
                 throw new Error(result.message || 'Something went wrong while sending your message.')
             }
 
@@ -108,6 +126,7 @@ function ContactPage() {
                     >
                         <input type="hidden" name="_subject" value="New Contact Form Lead - Kripon Digital" />
                         <input type="hidden" name="_template" value="table" />
+                        <input type="hidden" name="_captcha" value="false" />
                         <input type="text" name="_honey" className="hidden" tabIndex="-1" autoComplete="off" />
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

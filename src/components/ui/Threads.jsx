@@ -125,150 +125,165 @@ const Threads = ({ color = [1, 1, 1], amplitude = 1, distance = 0, enableMouseIn
   const animationFrameId = useRef();
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || typeof window === 'undefined' || typeof document === 'undefined') return;
     const container = containerRef.current;
+    try {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const renderer = new Renderer({ alpha: true, dpr });
+      const gl = renderer.gl;
+      gl.clearColor(0, 0, 0, 0);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      container.appendChild(gl.canvas);
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    const renderer = new Renderer({ alpha: true, dpr });
-    const gl = renderer.gl;
-    gl.clearColor(0, 0, 0, 0);
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    container.appendChild(gl.canvas);
+      const geometry = new Triangle(gl);
+      const program = new Program(gl, {
+        vertex: vertexShader,
+        fragment: fragmentShader,
+        uniforms: {
+          iTime: { value: 0 },
+          iResolution: {
+            value: new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height)
+          },
+          uColor: { value: new Color(...color) },
+          uAmplitude: { value: amplitude },
+          uDistance: { value: distance },
+          uMouse: { value: new Float32Array([0.5, 0.5]) }
+        }
+      });
 
-    const geometry = new Triangle(gl);
-    const program = new Program(gl, {
-      vertex: vertexShader,
-      fragment: fragmentShader,
-      uniforms: {
-        iTime: { value: 0 },
-        iResolution: {
-          value: new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height)
-        },
-        uColor: { value: new Color(...color) },
-        uAmplitude: { value: amplitude },
-        uDistance: { value: distance },
-        uMouse: { value: new Float32Array([0.5, 0.5]) }
+      const mesh = new Mesh(gl, { geometry, program });
+
+      function resize() {
+        const { clientWidth, clientHeight } = container;
+        renderer.setSize(clientWidth, clientHeight);
+        program.uniforms.iResolution.value.r = clientWidth;
+        program.uniforms.iResolution.value.g = clientHeight;
+        program.uniforms.iResolution.value.b = clientWidth / Math.max(clientHeight, 1);
       }
-    });
+      window.addEventListener('resize', resize);
+      resize();
 
-    const mesh = new Mesh(gl, { geometry, program });
+      const reducedMotion = typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+      const supportsHoverPointer = typeof window.matchMedia === 'function'
+        ? window.matchMedia('(hover: hover) and (pointer: fine)').matches
+        : false;
+      const canUseMouse = enableMouseInteraction && supportsHoverPointer;
 
-    function resize() {
-      const { clientWidth, clientHeight } = container;
-      renderer.setSize(clientWidth, clientHeight);
-      program.uniforms.iResolution.value.r = clientWidth;
-      program.uniforms.iResolution.value.g = clientHeight;
-      program.uniforms.iResolution.value.b = clientWidth / Math.max(clientHeight, 1);
-    }
-    window.addEventListener('resize', resize);
-    resize();
+      let currentMouse = [0.5, 0.5];
+      let targetMouse = [0.5, 0.5];
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const supportsHoverPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const canUseMouse = enableMouseInteraction && supportsHoverPointer;
+      function handleMouseMove(e) {
+        const w = Math.max(container.clientWidth, 1);
+        const h = Math.max(container.clientHeight, 1);
+        const x = Math.min(Math.max(e.offsetX / w, 0), 1);
+        const y = 1.0 - Math.min(Math.max(e.offsetY / h, 0), 1);
+        targetMouse = [x, y];
+      }
 
-    let currentMouse = [0.5, 0.5];
-    let targetMouse = [0.5, 0.5];
+      function handleMouseLeave() {
+        targetMouse = [0.5, 0.5];
+      }
 
-    function handleMouseMove(e) {
-      const w = Math.max(container.clientWidth, 1);
-      const h = Math.max(container.clientHeight, 1);
-      const x = Math.min(Math.max(e.offsetX / w, 0), 1);
-      const y = 1.0 - Math.min(Math.max(e.offsetY / h, 0), 1);
-      targetMouse = [x, y];
-    }
-    function handleMouseLeave() {
-      targetMouse = [0.5, 0.5];
-    }
-    if (canUseMouse) {
-      container.addEventListener('mousemove', handleMouseMove, { passive: true });
-      container.addEventListener('mouseleave', handleMouseLeave);
-    }
+      if (canUseMouse) {
+        container.addEventListener('mousemove', handleMouseMove, { passive: true });
+        container.addEventListener('mouseleave', handleMouseLeave);
+      }
 
-    let isInViewport = true;
-    let lastFrameTime = 0;
-    const frameInterval = 1000 / Math.max(maxFps, 1);
+      let isInViewport = true;
+      let lastFrameTime = 0;
+      const frameInterval = 1000 / Math.max(maxFps, 1);
+      const canObserveVisibility = typeof IntersectionObserver === 'function';
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isInViewport = entry.isIntersecting;
+      const observer = canObserveVisibility
+        ? new IntersectionObserver(
+            ([entry]) => {
+              isInViewport = entry.isIntersecting;
 
-        if (!isInViewport && animationFrameId.current) {
+              if (!isInViewport && animationFrameId.current) {
+                cancelAnimationFrame(animationFrameId.current);
+                animationFrameId.current = null;
+                return;
+              }
+
+              if (isInViewport && !animationFrameId.current && !document.hidden && !reducedMotion) {
+                animationFrameId.current = requestAnimationFrame(update);
+              }
+            },
+            { threshold: 0.01 }
+          )
+        : null;
+
+      observer?.observe(container);
+
+      function handleVisibilityChange() {
+        if (document.hidden && animationFrameId.current) {
           cancelAnimationFrame(animationFrameId.current);
           animationFrameId.current = null;
           return;
         }
 
-        if (isInViewport && !animationFrameId.current && !document.hidden && !reducedMotion) {
+        if (!document.hidden && isInViewport && !animationFrameId.current && !reducedMotion) {
           animationFrameId.current = requestAnimationFrame(update);
         }
-      },
-      { threshold: 0.01 }
-    );
-    observer.observe(container);
-
-    function handleVisibilityChange() {
-      if (document.hidden && animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-        animationFrameId.current = null;
-        return;
       }
+      document.addEventListener('visibilitychange', handleVisibilityChange);
 
-      if (!document.hidden && isInViewport && !animationFrameId.current && !reducedMotion) {
+      function update(t) {
+        if (document.hidden || !isInViewport) {
+          animationFrameId.current = null;
+          return;
+        }
+
+        if (t - lastFrameTime < frameInterval) {
+          animationFrameId.current = requestAnimationFrame(update);
+          return;
+        }
+        lastFrameTime = t;
+
+        if (canUseMouse) {
+          const smoothing = 0.05;
+          currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
+          currentMouse[1] += smoothing * (targetMouse[1] - currentMouse[1]);
+          program.uniforms.uMouse.value[0] = currentMouse[0];
+          program.uniforms.uMouse.value[1] = currentMouse[1];
+        } else {
+          program.uniforms.uMouse.value[0] = 0.5;
+          program.uniforms.uMouse.value[1] = 0.5;
+        }
+
+        program.uniforms.iTime.value = t * 0.001;
+        renderer.render({ scene: mesh });
         animationFrameId.current = requestAnimationFrame(update);
       }
-    }
-    document.addEventListener('visibilitychange', handleVisibilityChange);
 
-    function update(t) {
-      if (document.hidden || !isInViewport) {
-        animationFrameId.current = null;
-        return;
-      }
-
-      if (t - lastFrameTime < frameInterval) {
-        animationFrameId.current = requestAnimationFrame(update);
-        return;
-      }
-      lastFrameTime = t;
-
-      if (canUseMouse) {
-        const smoothing = 0.05;
-        currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
-        currentMouse[1] += smoothing * (targetMouse[1] - currentMouse[1]);
-        program.uniforms.uMouse.value[0] = currentMouse[0];
-        program.uniforms.uMouse.value[1] = currentMouse[1];
+      if (reducedMotion) {
+        program.uniforms.iTime.value = 0;
+        renderer.render({ scene: mesh });
       } else {
-        program.uniforms.uMouse.value[0] = 0.5;
-        program.uniforms.uMouse.value[1] = 0.5;
+        animationFrameId.current = requestAnimationFrame(update);
       }
-      program.uniforms.iTime.value = t * 0.001;
 
-      renderer.render({ scene: mesh });
-      animationFrameId.current = requestAnimationFrame(update);
+      return () => {
+        if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
+        window.removeEventListener('resize', resize);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+        observer?.disconnect();
+
+        if (canUseMouse) {
+          container.removeEventListener('mousemove', handleMouseMove);
+          container.removeEventListener('mouseleave', handleMouseLeave);
+        }
+
+        if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
+        gl.getExtension('WEBGL_lose_context')?.loseContext();
+      };
+    } catch (error) {
+      console.warn('Threads effect disabled:', error);
+      return undefined;
     }
-
-    if (reducedMotion) {
-      program.uniforms.iTime.value = 0;
-      renderer.render({ scene: mesh });
-    } else {
-      animationFrameId.current = requestAnimationFrame(update);
-    }
-
-    return () => {
-      if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
-      window.removeEventListener('resize', resize);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      observer.disconnect();
-
-      if (canUseMouse) {
-        container.removeEventListener('mousemove', handleMouseMove);
-        container.removeEventListener('mouseleave', handleMouseLeave);
-      }
-      if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
-    };
   }, [color, amplitude, distance, enableMouseInteraction]);
 
   return <div ref={containerRef} className="threads-container" {...rest} />;

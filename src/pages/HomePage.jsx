@@ -15,6 +15,7 @@ import HeroVideo from '../assets/heroVideo.mp4'
 import ProjectsList from '../components/ui/ProjectsList'
 import Threads from '../components/ui/Threads'
 import SeoMeta from '../components/ui/SeoMeta'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -23,7 +24,7 @@ import { useNavigate } from 'react-router-dom';
 function HomePage() {
     const navigate = useNavigate();
     const container = useRef()
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const prefersReducedMotion = usePrefersReducedMotion()
 
     useGSAP(() => {
         if (prefersReducedMotion) return
@@ -86,7 +87,7 @@ function HomePage() {
 
                 <div className="relative z-20 flex flex-col items-center pt-[100px] text-center w-full px-4">
 
-                    <div className="flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-1.5 md:px-6 md:py-2 backdrop-blur-md mb-8 lg:mb-[52px]">
+                    <div className="mt-6 lg:mt-8 flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-1.5 md:px-6 md:py-2 backdrop-blur-md mb-8 lg:mb-[52px]">
                         <div className="h-1.5 w-1.5 md:h-2 md:w-2 bg-green-600 rounded-full animate-bounce"></div>
                         <span className="text-xs md:text-sm font-medium text-[#FFFFFF]">Available Now</span>
                     </div>

@@ -8,7 +8,6 @@ import Footer from '../components/layout/Footer'
 import BenefitsSection from '../components/ui/BenefitsSection'
 import SeoMeta from '../components/ui/SeoMeta'
 
-
 function ProjectPage() {
     return (
         <div className='w-full bg-black min-h-screen pt-32.5 lg:pt-37.5'>
@@ -20,8 +19,6 @@ function ProjectPage() {
             />
             <CustomCursor />
             <ProjectsList />
-
-
 
             <BenefitsSection />
             <CallToAction />

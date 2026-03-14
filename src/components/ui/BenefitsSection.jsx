@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -123,7 +124,7 @@ function BenefitCard({ benefit, index }) {
 
 function BenefitsSection() {
     const container = useRef(null)
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const prefersReducedMotion = usePrefersReducedMotion()
 
     useGSAP(() => {
         if (prefersReducedMotion) return

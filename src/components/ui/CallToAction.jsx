@@ -1,78 +1,62 @@
-import React, { useEffect, useRef } from 'react'
 import Button from './button'
+import { useNavigate } from 'react-router-dom'
 import backgroundImage from '../../assets/Have_an_ideo_background.jpg'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 function CallToAction() {
-    const containerRef = useRef(null)
-    const textRef1 = useRef(null)
-    const textRef2 = useRef(null)
-    const buttonRef = useRef(null)
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                }
-            })
-
-            tl.fromTo(textRef1.current,
-                { y: 80, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, ease: "power4.out" }
-            )
-                .fromTo(textRef2.current,
-                    { y: 80, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 1, ease: "power4.out" },
-                    "-=0.8"
-                )
-                .fromTo(buttonRef.current,
-                    { y: 40, opacity: 0, scale: 0.9 },
-                    { y: 0, opacity: 1, scale: 1, duration: 1, ease: "back.out(1.5)" },
-                    "-=0.6"
-                )
-        }, containerRef)
-
-        return () => ctx.revert()
-    }, [])
+    const navigate = useNavigate()
 
     return (
-        <div ref={containerRef} className="relative w-full h-[60vh] min-h-[500px] md:h-[800px] flex items-center justify-center overflow-hidden bg-black group">
-            {/* Background Image with slow zoom */}
-            <div className="absolute inset-0 z-0 transition-transform duration-[15000ms] ease-linear group-hover:scale-110">
-                <img
-                    src={backgroundImage}
-                    alt="Have an idea background"
-                    className="w-full h-full object-cover scale-[1.1]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/40 to-black/90 backdrop-blur-[2px]"></div>
-            </div>
+        <section className="relative w-full min-h-[560px] md:min-h-[760px] flex items-center justify-center overflow-hidden bg-black px-4 py-14 md:px-10">
 
-            {/* Glowing Ambient Orb */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[700px] h-[300px] md:h-[700px] bg-purple-600/20 rounded-full blur-[100px] md:blur-[180px] z-0 pointer-events-none"></div>
+            <img
+                src={backgroundImage}
+                alt="Have an idea background"
+                className="absolute inset-0 w-full h-full object-cover z-0 scale-[1.07]"
+            />
 
-            <div className="relative z-10 flex flex-col items-center text-center w-full justify-center px-4">
-                <div className="overflow-hidden mb-2">
-                    <h2 ref={textRef1} className="text-white text-6xl sm:text-7xl lg:text-[120px] font-light leading-[1] tracking-tight">Have</h2>
-                </div>
-                <div className="overflow-hidden mb-12 lg:mb-16">
-                    <h2 ref={textRef2} className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/40 text-6xl sm:text-7xl lg:text-[120px] font-light leading-[1.1] tracking-tight italic pr-4">an idea?</h2>
+            <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_22%_14%,rgba(138,56,245,0.26),transparent_48%),radial-gradient(circle_at_80%_78%,rgba(58,116,255,0.14),transparent_42%),linear-gradient(180deg,rgba(0,0,0,0.28)_0%,rgba(0,0,0,0.74)_100%)]" />
+
+            <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center rounded-[30px] border border-white/15 bg-black/35 px-6 py-12 text-center backdrop-blur-md md:px-10 md:py-16">
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/40 px-4 py-1.5 text-[11px] uppercase tracking-[0.22em] text-white/80">
+                    <span className="h-2 w-2 rounded-full bg-[#8A38F5] shadow-[0_0_12px_rgba(138,56,245,0.9)]" />
+                    Let's Build Something Real
                 </div>
 
-                <div ref={buttonRef} className="relative group/btn cursor-pointer outline-none">
-                    {/* Animated Button Glow */}
-                    <div className="absolute -inset-[2px] bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 rounded-full blur opacity-30 group-hover/btn:opacity-70 transition duration-500 group-hover/btn:duration-200"></div>
-                    <Button className="relative border border-white/20 bg-black/40 hover:bg-black/80 text-white rounded-full text-xl sm:text-2xl lg:text-[36px] px-10 py-5 lg:px-16 lg:py-6 h-auto font-light tracking-[0.2em] backdrop-blur-xl transition-all hover:scale-[1.02] duration-500 hover:border-white/50">
-                        TELL US
+                <h2 className="text-balance text-white text-4xl sm:text-6xl lg:text-[92px] font-light leading-[1.04] tracking-tight">
+                    Have an idea
+                    <span className="block font-normal text-white/90">worth building?</span>
+                </h2>
+
+                <p className="mt-5 max-w-2xl text-sm leading-7 text-white/70 md:text-base">
+                    From concept to launch, we craft web and app experiences that feel premium,
+                    perform fast, and convert better.
+                </p>
+
+                <div className="mt-9 flex w-full max-w-xl flex-col items-center justify-center gap-4 sm:flex-row">
+                    <Button
+                        onClick={() => navigate('/contact')}
+                        className="h-14 w-full rounded-full bg-[linear-gradient(180deg,#9E59FF_0%,#4B1695_100%)] px-8 text-sm font-semibold tracking-[0.18em] text-white uppercase shadow-[0_12px_40px_-18px_rgba(138,56,245,0.95)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_42px_-16px_rgba(138,56,245,0.85)] sm:w-auto"
+                    >
+                        Start Project
+                    </Button>
+
+                    <Button
+                        onClick={() => navigate('/projects')}
+                        className="h-14 w-full rounded-full border border-white/35 bg-black/35 px-8 text-sm font-semibold tracking-[0.14em] text-white uppercase transition-all duration-300 hover:bg-white/10 sm:w-auto"
+                    >
+                        See Work
                     </Button>
                 </div>
+
+                <div className="mt-8 flex items-center gap-5 text-[12px] tracking-[0.14em] uppercase text-white/60">
+                    <span>Fast delivery</span>
+                    <span className="h-1 w-1 rounded-full bg-white/40" />
+                    <span>Design-first team</span>
+                    <span className="h-1 w-1 rounded-full bg-white/40" />
+                    <span>India · Nepal · Bhutan</span>
+                </div>
             </div>
-        </div>
+        </section>
     )
 }
 

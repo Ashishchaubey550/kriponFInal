@@ -8,6 +8,7 @@ import CustomCursor from '../components/ui/CustomCursor'
 import Help from '../components/ui/help'
 import BenefitsSection from '../components/ui/BenefitsSection'
 import SeoMeta from '../components/ui/SeoMeta'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion'
 
 
 import hellofrom from '../assets/Hellofromzet.jpg'
@@ -56,7 +57,7 @@ const services = [
 
 function ServicePage() {
     const container = useRef()
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const prefersReducedMotion = usePrefersReducedMotion()
 
     useGSAP(() => {
         if (prefersReducedMotion) return

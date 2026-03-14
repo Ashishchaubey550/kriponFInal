@@ -7,12 +7,13 @@ import Button from '../components/ui/button'
 import Footer from '../components/layout/Footer'
 import CustomCursor from '../components/ui/CustomCursor'
 import SeoMeta from '../components/ui/SeoMeta'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion'
 
 gsap.registerPlugin(ScrollTrigger)
 
 function AboutPage() {
     const container = useRef()
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const prefersReducedMotion = usePrefersReducedMotion()
 
     useGSAP(() => {
         if (prefersReducedMotion) return

@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 body {
     background-color: #000000;
@@ -12,5 +10,99 @@ body {
     body.custom-cursor-enabled button,
     body.custom-cursor-enabled [role="button"] {
         cursor: none;
+    }
+}
+
+.loader-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.14;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(circle at center, black 25%, transparent 78%);
+}
+
+.loader-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(36px);
+    animation: loaderPulse 2s ease-in-out infinite;
+}
+
+.loader-orb-left {
+    width: min(42vw, 520px);
+    height: min(42vw, 520px);
+    left: -12vw;
+    top: -8vh;
+    background: radial-gradient(circle at center, rgba(132, 76, 255, 0.52) 0%, rgba(132, 76, 255, 0) 70%);
+}
+
+.loader-orb-right {
+    width: min(38vw, 420px);
+    height: min(38vw, 420px);
+    right: -10vw;
+    bottom: -12vh;
+    animation-delay: 0.35s;
+    background: radial-gradient(circle at center, rgba(72, 127, 255, 0.35) 0%, rgba(72, 127, 255, 0) 68%);
+}
+
+.loader-logo {
+    animation: loaderLogoIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.loader-brand {
+    animation: loaderTextIn 0.75s ease-out 0.2s both;
+}
+
+.loader-bar-fill {
+    transform-origin: left center;
+    background: linear-gradient(90deg, #8a38f5 0%, #b589ff 60%, #d6c2ff 100%);
+    animation: loaderProgress 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+
+@keyframes loaderLogoIn {
+    from {
+        opacity: 0;
+        transform: translateY(22px) scale(0.92) rotate(-6deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+}
+
+@keyframes loaderTextIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+        letter-spacing: 0.32em;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 0.42em;
+    }
+}
+
+@keyframes loaderProgress {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes loaderPulse {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.06);
+        opacity: 1;
     }
 }

@@ -49,13 +49,16 @@ export default function ProjectsList() {
                         </p>
                     </div>
                 }
-                renderItem={(project) => (
-                    <div className="w-full max-w-5xl h-[50vh] lg:h-[80vh] bg-neutral-900 rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-2xl relative border border-white/10">
+                renderItem={(project, index) => (
+                    <div className="w-full max-w-5xl h-[52vh] lg:h-[74vh] bg-neutral-900 rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-2xl relative border border-white/10">
                         <div className="relative w-full h-full">
                             <img
                                 src={project.image}
                                 alt={project.title}
                                 className="w-full h-full object-cover"
+                                loading={index === 0 ? 'eager' : 'lazy'}
+                                fetchPriority={index === 0 ? 'high' : 'low'}
+                                decoding="async"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 lg:p-12">
                                 <h3 className="text-white text-2xl sm:text-3xl lg:text-5xl font-bold mb-2">

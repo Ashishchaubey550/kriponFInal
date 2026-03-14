@@ -7,26 +7,48 @@ function CustomCursor() {
     const cursorRef = useRef(null)
     const cursorTextRef = useRef(null)
     const [isEnabled, setIsEnabled] = useState(false)
+    const hasMovedRef = useRef(false)
 
     useEffect(() => {
         const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)')
         const applyState = () => setIsEnabled(mediaQuery.matches)
 
         applyState()
-        mediaQuery.addEventListener('change', applyState)
+        if (typeof mediaQuery.addEventListener === 'function') {
+            mediaQuery.addEventListener('change', applyState)
+            return () => mediaQuery.removeEventListener('change', applyState)
+        }
 
-        return () => mediaQuery.removeEventListener('change', applyState)
+        mediaQuery.addListener(applyState)
+        return () => mediaQuery.removeListener(applyState)
     }, [])
 
     useGSAP(() => {
         if (!isEnabled || !cursorRef.current) return
 
-        gsap.set(cursorRef.current, { xPercent: -50, yPercent: -50, scale: 1 })
+        const storedX = typeof window.__kriponCursorX === 'number' ? window.__kriponCursorX : null
+        const storedY = typeof window.__kriponCursorY === 'number' ? window.__kriponCursorY : null
+
+        gsap.set(cursorRef.current, { xPercent: -50, yPercent: -50, scale: 1, autoAlpha: 0 })
+
+        if (storedX !== null && storedY !== null) {
+            hasMovedRef.current = true
+            gsap.set(cursorRef.current, { x: storedX, y: storedY, autoAlpha: 0.85 })
+        }
+
         const moveX = gsap.quickTo(cursorRef.current, 'x', { duration: 0.12, ease: 'power2.out' })
         const moveY = gsap.quickTo(cursorRef.current, 'y', { duration: 0.12, ease: 'power2.out' })
 
         const onMouseMove = (e) => {
             const { clientX, clientY } = e
+            window.__kriponCursorX = clientX
+            window.__kriponCursorY = clientY
+
+            if (!hasMovedRef.current) {
+                hasMovedRef.current = true
+                gsap.to(cursorRef.current, { autoAlpha: 0.85, duration: 0.12, ease: 'power2.out' })
+            }
+
             moveX(clientX)
             moveY(clientY)
         }
@@ -75,7 +97,8 @@ function CustomCursor() {
                 duration: 0.16,
                 ease: 'power2.out',
                 backgroundColor: '#8C32FF',
-                mixBlendMode: 'exclusion'
+                mixBlendMode: 'exclusion',
+                autoAlpha: 0.85
             })
             gsap.to(cursorTextRef.current, { opacity: 0, scale: 0.5, duration: 0.14 })
         }
