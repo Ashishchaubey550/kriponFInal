@@ -8,6 +8,7 @@ import hellofrom from '../assets/Hellofromzet.jpg'
 import homepage from '../assets/HomePage.jpg'
 import Team from '../components/ui/Team'
 import FAQ from '../components/ui/FAQ'
+import Testimonials from '../components/ui/Testimonials'
 import CallToAction from '../components/ui/CallToAction'
 import Footer from '../components/layout/Footer'
 import CustomCursor from '../components/ui/CustomCursor'
@@ -206,6 +207,7 @@ function HomePage() {
                     </Button>
 
                     <Team />
+                    <Testimonials />
                     <FAQ />
                     <CallToAction />
 

@@ -8,10 +8,7 @@ const faqs = [
     { question: "2. How long does it take to build a website?", answer: "Timelines vary by project scope, but typically range from 4-8 weeks for a standard website." },
     { question: "3. Do you create custom designs?", answer: "Yes, every project starts with a unique design strategy tailored to your brand goals." },
     { question: "4. Will my website be mobile-friendly?", answer: "Absolutely. We prioritize responsive design to ensure your site looks perfect on all devices." },
-    { question: "5. Do you provide ongoing support after launch?", answer: "Yes, we offer maintenance packages to keep your website secure and up-to-date." },
-    { question: "6. Can you redesign an existing website?", answer: "Yes, we can modernize your existing site while improving performance and user experience." },
-    { question: "7. What if I don't like the design?", answer: "We have an iterative design process with feedback loops to ensure you love the final result." },
-    { question: "8. Are there any refunds if I don't like the service?", answer: "We work closely with you to prevent this, but our refund policy is detailed in our service agreement." }
+    { question: "5. Do you provide ongoing support after launch?", answer: "Yes, we offer maintenance packages to keep your website secure and up-to-date." }
 ]
 
 function FAQItem({ question, answer, isOpen, onClick }) {
@@ -47,6 +44,13 @@ function FAQ() {
     return (
         <div className="w-full bg-black py-20 flex justify-center">
             <div className="w-full max-w-[800px] px-6">
+                <div className="flex justify-between items-center mb-0 py-5 border-b border-white/10">
+                    <span className="text-[11px] lg:text-[13px] tracking-[3px] uppercase text-white/40 font-medium">// FAQ°</span>
+                    <span className="text-[11px] lg:text-[13px] tracking-[3px] uppercase text-white/40 font-medium">Got Questions?</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl lg:text-[48px] font-bold leading-tight tracking-tight text-white text-center mt-12 lg:mt-16 mb-12 lg:mb-16">
+                    Frequently Asked <span className="bg-gradient-to-r from-[#8A38F5] to-[#b589ff] bg-clip-text text-transparent">Questions</span>
+                </h2>
                 <div className="flex flex-col gap-2">
                     {faqs.map((faq, index) => (
                         <FAQItem

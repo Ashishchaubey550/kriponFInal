@@ -7,8 +7,6 @@ import SeoMeta from '../components/ui/SeoMeta'
 import { trackLeadConversion } from '../lib/analytics'
 
 function ContactPage() {
-    const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '831cd623-f6ff-4d74-bff9-bcf06b31e10c'
-    const formEndpoint = 'https://api.web3forms.com/submit'
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [status, setStatus] = useState('idle')
     const [errorMessage, setErrorMessage] = useState('')
@@ -61,46 +59,24 @@ function ContactPage() {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local Time'
         const sourceUrl = window.location.href
 
-        const leadSummary = [
-            `Lead: ${name}`,
-            `Email: ${email}`,
-            `Service: ${serviceLabel}`,
-            `Preferred Call: ${preferredDate} | ${timeSlot}`,
-            `Submitted: ${submittedAt} (${timezone})`,
-            `Source: ${sourceUrl}`
-        ].join('\n')
-
-        const submissionPayload = {
-            access_key: web3FormsAccessKey,
-            subject: `New Lead: ${serviceLabel} - ${name || 'Website Inquiry'}`,
-            from_name: 'Kripon Digital Website',
-            replyto: email,
-            'Client Name': name,
-            'Client Email': email,
-            Service: serviceLabel,
-            'Preferred Call Date': preferredDate,
-            'Preferred Time Slot': timeSlot,
-            'Lead Summary': leadSummary,
-            'Project Brief': message
-        }
-
-        if (service === 'other' && customRequirement) {
-            submissionPayload['Custom Requirement'] = customRequirement
-        }
-
         try {
-            const params = new URLSearchParams()
-            Object.entries(submissionPayload).forEach(([key, value]) => {
-                params.append(key, String(value))
-            })
-
-            const response = await fetch(formEndpoint, {
+            const response = await fetch('/api/send-email', {
                 method: 'POST',
                 headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 },
-                body: params.toString()
+                body: JSON.stringify({
+                    name,
+                    email,
+                    service: serviceLabel,
+                    preferredDate,
+                    timeSlot,
+                    message,
+                    customRequirement: service === 'other' ? customRequirement : '',
+                    submittedAt,
+                    timezone,
+                    sourceUrl
+                })
             })
 
             let result = {}
@@ -110,9 +86,7 @@ function ContactPage() {
                 result = {}
             }
 
-            const wasSuccessful = Boolean(result.success)
-
-            if (!response.ok || !wasSuccessful) {
+            if (!response.ok || !result.success) {
                 throw new Error(result.message || 'Something went wrong while sending your message.')
             }
 
