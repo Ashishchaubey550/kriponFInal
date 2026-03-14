@@ -89,13 +89,18 @@ function ContactPage() {
         }
 
         try {
+            const params = new URLSearchParams()
+            Object.entries(submissionPayload).forEach(([key, value]) => {
+                params.append(key, String(value))
+            })
+
             const response = await fetch(formEndpoint, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: JSON.stringify(submissionPayload)
+                body: params.toString()
             })
 
             let result = {}
