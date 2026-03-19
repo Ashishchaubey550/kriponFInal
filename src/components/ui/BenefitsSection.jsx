@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion'
+import launchcard from '../../assets/launchcard.webp'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -63,6 +64,9 @@ function BenefitCard({ benefit, index }) {
             onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.022)' }}
             onMouseOut={e => { e.currentTarget.style.transform = 'scale(1)' }}
         >
+            {/* Background image */}
+            <img src={launchcard} alt="" className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none" />
+
             {/* Mouse-tracked glow */}
             <div ref={glowRef} className="pointer-events-none absolute inset-0 z-0" style={{ transition: 'background 0.1s ease' }} />
 

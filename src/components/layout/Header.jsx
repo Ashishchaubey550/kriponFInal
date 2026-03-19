@@ -1,4 +1,4 @@
-import logo from "../../assets/logo.png"
+import logo from "../../assets/logo.webp"
 import Button from "../ui/button"
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';

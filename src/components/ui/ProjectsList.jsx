@@ -1,10 +1,10 @@
 import React from 'react'
 import StackingCards from './StackingCards'
 
-import resume from '../../assets/resume.png'
-import spaa from '../../assets/spaa.png'
-import sparkluminarius from '../../assets/sparkluminarius.png'
-import dpEnter from '../../assets/dpEnter.png'
+import resume from '../../assets/resume.webp'
+import spaa from '../../assets/spaa.webp'
+import sparkluminarius from '../../assets/sparkluminarius.webp'
+import dpEnter from '../../assets/dpEnter.webp'
 const projects = [
     {
         id: 1,

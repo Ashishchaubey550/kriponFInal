@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import logo from '../../assets/logo.webp'
 
 function Footer() {
     return (
@@ -8,9 +9,9 @@ function Footer() {
             <div className="relative mx-auto max-w-[1240px] rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(255,255,255,0.01)_100%)] p-7 md:p-9 lg:p-11 backdrop-blur-sm">
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
                     <div className="lg:col-span-5">
-                        <div className="mb-5 flex items-center gap-3">
-                            <div className="flex h-11 w-11 items-center justify-center rounded-tr-xl rounded-bl-xl border border-white/70 text-xl font-bold">KD</div>
-                            <p className="text-4xl font-semibold tracking-tight">Kripon Digital</p>
+                        <div className="mb-5 flex items-center gap-2">
+                            <img src={logo} alt="Kripon Digital logo" className="h-[30px] w-[34px] md:h-[41.29px] md:w-[46px]" />
+                            <p className="text-xl font-bold"><span className="text-[#FFFFFF]">Kripon</span><span className="text-[#848483]">Digital</span></p>
                         </div>
 
                         <p className="max-w-md text-sm leading-7 text-white/60">
@@ -49,13 +50,13 @@ function Footer() {
                             </a>
                             <a href="#" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="LinkedIn">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.48 1s2.5 1.12 2.5 2.5zM0 8h5v16H0V8zm7.5 0h4.8v2.2h.1c.7-1.3 2.4-2.7 4.9-2.7 5.2 0 6.2 3.4 6.2 7.8V24h-5v-7.6c0-1.8 0-4.1-2.5-4.1s-2.9 1.9-2.9 4V24h-5V8z"/>
+                                    <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.48 1s2.5 1.12 2.5 2.5zM0 8h5v16H0V8zm7.5 0h4.8v2.2h.1c.7-1.3 2.4-2.7 4.9-2.7 5.2 0 6.2 3.4 6.2 7.8V24h-5v-7.6c0-1.8 0-4.1-2.5-4.1s-2.9 1.9-2.9 4V24h-5V8z" />
                                 </svg>
                                 LinkedIn
                             </a>
                             <a href="#" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="Behance">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path d="M8.6 11.2c1.5-.5 2.2-1.6 2.2-3.1C10.8 5.6 9 4 6 4H0v16h6.3c3.2 0 5.3-1.8 5.3-4.7 0-2.1-1.1-3.4-3-4.1zM3 6.8h2.5c1.5 0 2.2.5 2.2 1.7 0 1.2-.8 1.8-2.2 1.8H3V6.8zm2.9 10.4H3v-4.1h2.8c1.7 0 2.6.6 2.6 2.1 0 1.4-1 2-2.5 2zM16 7h7V5h-7v2zm8 6.5c0-3.5-2.1-5.7-5.3-5.7-3.4 0-5.7 2.4-5.7 6.1 0 3.8 2.2 6.1 5.9 6.1 2.7 0 4.6-1.2 5.3-3.5h-2.9c-.4.9-1.2 1.3-2.4 1.3-1.7 0-2.8-1-2.9-2.8H24v-1.5zm-8-1c.2-1.7 1.2-2.6 2.7-2.6 1.5 0 2.4.9 2.5 2.6H16z"/>
+                                    <path d="M8.6 11.2c1.5-.5 2.2-1.6 2.2-3.1C10.8 5.6 9 4 6 4H0v16h6.3c3.2 0 5.3-1.8 5.3-4.7 0-2.1-1.1-3.4-3-4.1zM3 6.8h2.5c1.5 0 2.2.5 2.2 1.7 0 1.2-.8 1.8-2.2 1.8H3V6.8zm2.9 10.4H3v-4.1h2.8c1.7 0 2.6.6 2.6 2.1 0 1.4-1 2-2.5 2zM16 7h7V5h-7v2zm8 6.5c0-3.5-2.1-5.7-5.3-5.7-3.4 0-5.7 2.4-5.7 6.1 0 3.8 2.2 6.1 5.9 6.1 2.7 0 4.6-1.2 5.3-3.5h-2.9c-.4.9-1.2 1.3-2.4 1.3-1.7 0-2.8-1-2.9-2.8H24v-1.5zm-8-1c.2-1.7 1.2-2.6 2.7-2.6 1.5 0 2.4.9 2.5 2.6H16z" />
                                 </svg>
                                 Behance
                             </a>

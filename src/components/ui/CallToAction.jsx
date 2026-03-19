@@ -1,6 +1,6 @@
 import Button from './button'
 import { useNavigate } from 'react-router-dom'
-import backgroundImage from '../../assets/Have_an_ideo_background.jpg'
+import backgroundImage from '../../assets/Have_an_ideo_background.webp'
 
 function CallToAction() {
     const navigate = useNavigate()

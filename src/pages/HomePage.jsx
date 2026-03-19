@@ -4,15 +4,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import Button from '../components/ui/button'
 import Help from '../components/ui/help'
-import hellofrom from '../assets/Hellofromzet.jpg'
-import homepage from '../assets/HomePage.jpg'
+import hellofrom from '../assets/Hellofromzet.webp'
+import homepage from '../assets/HomePage.webp'
 import Team from '../components/ui/Team'
 import FAQ from '../components/ui/FAQ'
 import Testimonials from '../components/ui/Testimonials'
 import CallToAction from '../components/ui/CallToAction'
 import Footer from '../components/layout/Footer'
 import CustomCursor from '../components/ui/CustomCursor'
-import HeroVideo from '../assets/heroVideo.mp4'
+import HeroVideo from '../assets/heroVideo_optimized.mp4'
 import ProjectsList from '../components/ui/ProjectsList'
 import Threads from '../components/ui/Threads'
 import SeoMeta from '../components/ui/SeoMeta'
@@ -86,12 +86,9 @@ function HomePage() {
                     fetchPriority="high"
                 />
 
-                <div className="relative z-20 flex flex-col items-center pt-[100px] text-center w-full px-4">
+                <div className="relative z-20 flex flex-col items-center pt-[160px] text-center w-full px-4">
 
-                    <div className="mt-6 lg:mt-8 flex items-center gap-2 rounded-full border border-white/20 bg-black/50 px-4 py-1.5 md:px-6 md:py-2 backdrop-blur-md mb-8 lg:mb-[52px]">
-                        <div className="h-1.5 w-1.5 md:h-2 md:w-2 bg-green-600 rounded-full animate-bounce"></div>
-                        <span className="text-xs md:text-sm font-medium text-[#FFFFFF]">Available Now</span>
-                    </div>
+
 
                     <div className='mb-8 lg:mb-[32px] w-full max-w-5xl lg:max-w-none'>
                         <h1 className="hero-text text-5xl md:text-8xl lg:text-[121.1px] font-medium leading-tight lg:leading-[121px] tracking-tight lg:tracking-[-5.5px] text-[#FFFFFF]">

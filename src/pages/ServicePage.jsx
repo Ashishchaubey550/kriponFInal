@@ -11,8 +11,12 @@ import SeoMeta from '../components/ui/SeoMeta'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion'
 
 
-import hellofrom from '../assets/Hellofromzet.jpg'
-import homepage from '../assets/HomePage.jpg'
+import webdevelopment from '../assets/webdevelopment.webp'
+import launchcard from '../assets/launchcard.webp'
+import stockmarket from '../assets/stockmarket.webp'
+import forextrading from '../assets/forextreding.webp'
+import uidesign from '../assets/uidesign.webp'
+import videoediting from '../assets/videoediting.webp'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -20,37 +24,37 @@ const services = [
     {
         title: "Web Development",
         description: "We design and develop unique, user-centric, and high-performance websites tailored to your brand and business goals.",
-        image: homepage,
+        image: webdevelopment,
         serviceKey: "web-dev"
     },
     {
         title: "App Development",
         description: "From concept to launch, we build user-friendly and scalable mobile applications with clean design and robust functionality.",
-        image: hellofrom,
+        image: launchcard,
         serviceKey: "app-dev"
     },
     {
         title: "Stock Market Dashboard",
         description: "We develop custom stock market dashboards for algorithm trading platforms, focusing on real-time data visualization, performance tracking, and user-friendly interfaces.",
-        image: homepage,
+        image: stockmarket,
         serviceKey: "other"
     },
     {
         title: "Forex Trading Systems",
         description: "We create solutions, forex trading systems with smart dashboards, strategy integrators, and automation-ready architecture for seamless trading operations.",
-        image: hellofrom,
+        image: forextrading,
         serviceKey: "other"
     },
     {
         title: "UI/UX Design",
         description: "We design intuitive user interfaces that are focused on usability, clarity, and engaging digital experiences.",
-        image: homepage,
+        image: uidesign,
         serviceKey: "design"
     },
     {
         title: "Video Editing",
         description: "Professional video editing services to enhance your brand's visual presence across digital platforms.",
-        image: hellofrom,
+        image: videoediting,
         serviceKey: "other"
     }
 ]
