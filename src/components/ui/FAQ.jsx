@@ -41,15 +41,32 @@ function FAQItem({ question, answer, isOpen, onClick }) {
 function FAQ() {
     const [openIndex, setOpenIndex] = useState(null)
 
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(faq => ({
+            '@type': 'Question',
+            name: faq.question.replace(/^\d+\.\s*/, ''),
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.answer
+            }
+        }))
+    }
+
     return (
         <div className="w-full bg-black py-20 flex justify-center">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+            />
             <div className="w-full max-w-[800px] px-6">
                 <div className="flex justify-between items-center mb-0 py-5 border-b border-white/10">
                     <span className="text-[11px] lg:text-[13px] tracking-[3px] uppercase text-white/40 font-medium">// FAQ°</span>
                     <span className="text-[11px] lg:text-[13px] tracking-[3px] uppercase text-white/40 font-medium">Got Questions?</span>
                 </div>
                 <h2 className="text-3xl md:text-4xl lg:text-[48px] font-bold leading-tight tracking-tight text-white text-center mt-12 lg:mt-16 mb-12 lg:mb-16">
-                    Frequently Asked <span className="bg-gradient-to-r from-[#8A38F5] to-[#b589ff] bg-clip-text text-transparent">Questions</span>
+                    Frequently Asked <span className="bg-linear-to-r from-[#8A38F5] to-[#b589ff] bg-clip-text text-transparent">Questions</span>
                 </h2>
                 <div className="flex flex-col gap-2">
                     {faqs.map((faq, index) => (

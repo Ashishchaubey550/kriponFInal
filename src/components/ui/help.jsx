@@ -55,6 +55,8 @@ function Help({ image, title, description, serviceKey, className, imageHeight })
                     className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.07]"
                     src={image}
                     alt={title}
+                    loading="lazy"
+                    decoding="async"
                 />
                 {/* Purple tint overlay rising from bottom */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#6B21A8]/50 via-[#8A38F5]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

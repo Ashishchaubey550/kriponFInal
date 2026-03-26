@@ -91,8 +91,12 @@ export default function Team() {
                     <img
                         ref={imageRef}
                         src={activeMember.image}
-                        alt={activeMember.name}
+                        alt={`${activeMember.name} - ${activeMember.title} at Kripon Digital`}
                         className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        width="500"
+                        height="600"
                     />
                 </div>
 
@@ -127,6 +131,10 @@ export default function Team() {
                                     src={member.image}
                                     alt={member.name}
                                     className="w-full h-full object-cover"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="128"
+                                    height="160"
                                 />
                             </button>
                         ))}
