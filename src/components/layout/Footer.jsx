@@ -19,7 +19,7 @@ function Footer() {
                         </p>
 
                         <a
-                            href="mailto:ashish550chaubey@gmail.com"
+                            href="mailto:digital@kripon.in"
                             className="mt-6 inline-flex items-center rounded-full border border-[#8A38F5]/55 bg-[linear-gradient(180deg,rgba(156,73,255,0.22)_0%,rgba(105,31,208,0.12)_100%)] px-5 py-2.5 text-sm font-medium text-[#EADFFF] transition-all hover:border-[#8A38F5]/80 hover:bg-[linear-gradient(180deg,rgba(156,73,255,0.3)_0%,rgba(105,31,208,0.2)_100%)]"
                         >
                             Start a project
@@ -40,7 +40,7 @@ function Footer() {
                     <div className="lg:col-span-2">
                         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Social</p>
                         <div className="flex flex-col gap-2.5 text-white/90">
-                            <a href="#" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="Instagram">
+                            <a href="https://www.instagram.com/kripon_digital/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="Instagram">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                                     <path d="M16 11.37a4 4 0 1 1-7.75 1.25 4 4 0 0 1 7.75-1.25z"></path>
@@ -48,13 +48,13 @@ function Footer() {
                                 </svg>
                                 Instagram
                             </a>
-                            <a href="#" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="LinkedIn">
+                            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="LinkedIn">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                     <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.48 1s2.5 1.12 2.5 2.5zM0 8h5v16H0V8zm7.5 0h4.8v2.2h.1c.7-1.3 2.4-2.7 4.9-2.7 5.2 0 6.2 3.4 6.2 7.8V24h-5v-7.6c0-1.8 0-4.1-2.5-4.1s-2.9 1.9-2.9 4V24h-5V8z" />
                                 </svg>
                                 LinkedIn
                             </a>
-                            <a href="#" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="Behance">
+                            <a href="https://www.behance.net/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="Behance">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                     <path d="M8.6 11.2c1.5-.5 2.2-1.6 2.2-3.1C10.8 5.6 9 4 6 4H0v16h6.3c3.2 0 5.3-1.8 5.3-4.7 0-2.1-1.1-3.4-3-4.1zM3 6.8h2.5c1.5 0 2.2.5 2.2 1.7 0 1.2-.8 1.8-2.2 1.8H3V6.8zm2.9 10.4H3v-4.1h2.8c1.7 0 2.6.6 2.6 2.1 0 1.4-1 2-2.5 2zM16 7h7V5h-7v2zm8 6.5c0-3.5-2.1-5.7-5.3-5.7-3.4 0-5.7 2.4-5.7 6.1 0 3.8 2.2 6.1 5.9 6.1 2.7 0 4.6-1.2 5.3-3.5h-2.9c-.4.9-1.2 1.3-2.4 1.3-1.7 0-2.8-1-2.9-2.8H24v-1.5zm-8-1c.2-1.7 1.2-2.6 2.7-2.6 1.5 0 2.4.9 2.5 2.6H16z" />
                                 </svg>
@@ -66,8 +66,16 @@ function Footer() {
                     <div className="lg:col-span-3">
                         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Contact</p>
                         <div className="flex flex-col gap-2.5">
-                            <a href="mailto:ashish550chaubey@gmail.com" className="text-white/90 transition-colors hover:text-[#B985FF]">ashish550chaubey@gmail.com</a>
-                            <a href="tel:+917024306915" className="text-white/90 transition-colors hover:text-[#B985FF]">+91 7024306915</a>
+                            <a href="mailto:digital@kripon.in" className="inline-flex items-center gap-2 text-white/90 transition-colors hover:text-[#B985FF]">
+                                {/* Email Icon */}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                                Email Us
+                            </a>
+                            <a href="tel:882385098" className="inline-flex items-center gap-2 text-white/90 transition-colors hover:text-[#B985FF]">
+                                {/* Call Icon */}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.72 19.72 0 0 1 3.09 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.73 3.06a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.99.36 2.01.6 3.06.73A2 2 0 0 1 22 16.92z"/></svg>
+                                Call Us
+                            </a>
                         </div>
                     </div>
                 </div>

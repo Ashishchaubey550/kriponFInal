@@ -166,7 +166,7 @@ function ContactPage() {
                                     type="email"
                                     id="email"
                                     name="email"
-                                    placeholder="yoob15136@gmail.com"
+                                    placeholder="digital@kripon.in"
                                     required
                                     className="w-full bg-white/10 border border-white/5 rounded-2xl px-6 py-4 outline-none focus:border-[#8A38F5]/70 focus:ring-2 focus:ring-[#8A38F5]/25 focus:shadow-[0_0_0_3px_rgba(138,56,245,0.12)] transition-all text-white placeholder:text-white/30"
                                 />
