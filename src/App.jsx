@@ -4,6 +4,10 @@ import { Analytics } from '@vercel/analytics/react'
 import './App.css'
 import Header from './components/layout/Header'
 import PageLoader from './components/ui/PageLoader'
+import WhatsAppButton from './components/ui/WhatsAppButton'
+import LeadPopup from './components/ui/LeadPopup'
+import ChatWidget from './components/ui/ChatWidget'
+import ScrollProgress from './components/ui/ScrollProgress'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
@@ -11,6 +15,11 @@ const ServicePage = lazy(() => import('./pages/ServicePage'))
 const ProjectPage = lazy(() => import('./pages/ProjectPage'))
 const ContactPage = lazy(() => import('./pages/ContactPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
+const BlogList = lazy(() => import('./pages/BlogList'))
+const BlogPost = lazy(() => import('./pages/BlogPost'))
+const WebsiteServicePage = lazy(() => import('./pages/services/WebsiteServicePage'))
+const AppServicePage = lazy(() => import('./pages/services/AppServicePage'))
+const StartupLandingPage = lazy(() => import('./pages/industries/StartupLandingPage'))
 
 function App() {
   const [showLoader, setShowLoader] = useState(() => {
@@ -43,12 +52,21 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/services" element={<ServicePage />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/blog" element={<BlogList />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/services/website-development" element={<WebsiteServicePage />} />
+                <Route path="/services/app-development" element={<AppServicePage />} />
+                <Route path="/for-startups" element={<StartupLandingPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </main>
+            <ScrollProgress />
+            <LeadPopup />
+            <ChatWidget />
           </Suspense>
         </BrowserRouter>
         <Analytics />
+        <WhatsAppButton />
       </div>
     </>
   )

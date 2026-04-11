@@ -11,6 +11,7 @@ const Header = () => {
         { name: "Services", href: "/services", action: () => { navigate('/services'); setIsMenuOpen(false); } },
         { name: "Work", href: "/projects", action: () => { navigate('/projects'); setIsMenuOpen(false); } },
         { name: "About", href: "/about", action: () => { navigate('/about'); setIsMenuOpen(false); } },
+        { name: "Blog", href: "/blog", action: () => { navigate('/blog'); setIsMenuOpen(false); } },
         { name: "Contact", href: "/contact", action: () => { navigate('/contact'); setIsMenuOpen(false); } },
     ]
 

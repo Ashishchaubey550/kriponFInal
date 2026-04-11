@@ -33,6 +33,7 @@ function Footer() {
                             <Link to="/services" className="transition-colors hover:text-[#B985FF]">Services</Link>
                             <Link to="/projects" className="transition-colors hover:text-[#B985FF]">Work</Link>
                             <Link to="/about" className="transition-colors hover:text-[#B985FF]">About</Link>
+                            <Link to="/blog" className="transition-colors hover:text-[#B985FF]">Blog</Link>
                             <Link to="/contact" className="transition-colors hover:text-[#B985FF]">Contact</Link>
                         </div>
                     </div>
@@ -48,17 +49,18 @@ function Footer() {
                                 </svg>
                                 Instagram
                             </a>
-                            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="LinkedIn">
+                            {/* TODO: Replace with your actual LinkedIn company page URL */}
+                            <a href="https://www.linkedin.com/company/kripon-digital" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="LinkedIn">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                     <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.48 1s2.5 1.12 2.5 2.5zM0 8h5v16H0V8zm7.5 0h4.8v2.2h.1c.7-1.3 2.4-2.7 4.9-2.7 5.2 0 6.2 3.4 6.2 7.8V24h-5v-7.6c0-1.8 0-4.1-2.5-4.1s-2.9 1.9-2.9 4V24h-5V8z" />
                                 </svg>
                                 LinkedIn
                             </a>
-                            <a href="https://www.behance.net/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition-colors hover:text-[#B985FF]" aria-label="Behance">
+                            <a href="https://wa.me/917024306915?text=Hi%20Kripon%20Digital!%20I%20visited%20your%20website." target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition-colors hover:text-[#25D366]" aria-label="WhatsApp">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                    <path d="M8.6 11.2c1.5-.5 2.2-1.6 2.2-3.1C10.8 5.6 9 4 6 4H0v16h6.3c3.2 0 5.3-1.8 5.3-4.7 0-2.1-1.1-3.4-3-4.1zM3 6.8h2.5c1.5 0 2.2.5 2.2 1.7 0 1.2-.8 1.8-2.2 1.8H3V6.8zm2.9 10.4H3v-4.1h2.8c1.7 0 2.6.6 2.6 2.1 0 1.4-1 2-2.5 2zM16 7h7V5h-7v2zm8 6.5c0-3.5-2.1-5.7-5.3-5.7-3.4 0-5.7 2.4-5.7 6.1 0 3.8 2.2 6.1 5.9 6.1 2.7 0 4.6-1.2 5.3-3.5h-2.9c-.4.9-1.2 1.3-2.4 1.3-1.7 0-2.8-1-2.9-2.8H24v-1.5zm-8-1c.2-1.7 1.2-2.6 2.7-2.6 1.5 0 2.4.9 2.5 2.6H16z" />
+                                    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.82 14.12c-.24.68-1.42 1.34-1.96 1.38-.52.04-1 .24-3.37-.7-2.86-1.14-4.68-4.06-4.82-4.25-.14-.19-1.14-1.52-1.14-2.9 0-1.38.72-2.06.98-2.34s.56-.36.76-.36c.2 0 .38 0 .54.01.18.01.42-.07.66.5.24.58.82 2 .9 2.14.06.14.1.32.02.5-.1.2-.14.32-.28.48-.14.18-.3.38-.42.52-.14.14-.28.3-.12.58.16.28.72 1.18 1.54 1.92 1.06.94 1.96 1.24 2.24 1.38.28.14.44.12.6-.06.16-.2.7-.82.9-1.1.18-.28.38-.24.64-.14.26.08 1.66.78 1.94.92.28.14.46.22.54.34.06.12.06.68-.18 1.36z" />
                                 </svg>
-                                Behance
+                                WhatsApp
                             </a>
                         </div>
                     </div>
@@ -68,13 +70,18 @@ function Footer() {
                         <div className="flex flex-col gap-2.5">
                             <a href="mailto:digital@kripon.in" className="inline-flex items-center gap-2 text-white/90 transition-colors hover:text-[#B985FF]">
                                 {/* Email Icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>
                                 Email Us
                             </a>
-                            <a href="tel:882385098" className="inline-flex items-center gap-2 text-white/90 transition-colors hover:text-[#B985FF]">
+                            <a href="tel:+917024306915" className="inline-flex items-center gap-2 text-white/90 transition-colors hover:text-[#B985FF]">
                                 {/* Call Icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.72 19.72 0 0 1 3.09 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.73 3.06a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.99.36 2.01.6 3.06.73A2 2 0 0 1 22 16.92z"/></svg>
-                                Call Us
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.72 19.72 0 0 1 3.09 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.73 3.06a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.99.36 2.01.6 3.06.73A2 2 0 0 1 22 16.92z" /></svg>
+                                +91 70243 06915
+                            </a>
+                            <a href="https://wa.me/917024306915" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white/90 transition-colors hover:text-[#25D366]">
+                                {/* WhatsApp Icon */}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.82 14.12c-.24.68-1.42 1.34-1.96 1.38-.52.04-1 .24-3.37-.7-2.86-1.14-4.68-4.06-4.82-4.25-.14-.19-1.14-1.52-1.14-2.9 0-1.38.72-2.06.98-2.34s.56-.36.76-.36c.2 0 .38 0 .54.01.18.01.42-.07.66.5.24.58.82 2 .9 2.14.06.14.1.32.02.5-.1.2-.14.32-.28.48-.14.18-.3.38-.42.52-.14.14-.28.3-.12.58.16.28.72 1.18 1.54 1.92 1.06.94 1.96 1.24 2.24 1.38.28.14.44.12.6-.06.16-.2.7-.82.9-1.1.18-.28.38-.24.64-.14.26.08 1.66.78 1.94.92.28.14.46.22.54.34.06.12.06.68-.18 1.36z" /></svg>
+                                WhatsApp Us
                             </a>
                         </div>
                     </div>

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import StackingCards from './StackingCards'
 
 import resume from '../../assets/resume.webp'
 import spaa from '../../assets/spaa.webp'
 import sparkluminarius from '../../assets/sparkluminarius.webp'
 import dpEnter from '../../assets/dpEnter.webp'
+
 const projects = [
     {
         id: 1,
@@ -36,6 +37,69 @@ const projects = [
     }
 ]
 
+function TiltProjectCard({ project, index }) {
+    const cardRef = useRef(null)
+
+    const handleMouseMove = (e) => {
+        const card = cardRef.current
+        if (!card) return
+        const { left, top, width, height } = card.getBoundingClientRect()
+        const x = e.clientX - left
+        const y = e.clientY - top
+        // subtle 3D tilt
+        const rx = ((y - height / 2) / (height / 2)) * -3
+        const ry = ((x - width / 2) / (width / 2)) * 3
+        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.01)`
+    }
+
+    const handleMouseLeave = () => {
+        if (cardRef.current) {
+            cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)'
+        }
+    }
+
+    return (
+        <div
+            ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{
+                transformStyle: 'preserve-3d',
+                willChange: 'transform',
+                transition: 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+            }}
+            className="w-full max-w-5xl h-[52vh] lg:h-[74vh] bg-neutral-900 rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)] hover:shadow-[0_40px_80px_-15px_rgba(138,56,245,0.2)] relative border border-white/10 group"
+        >
+            <div className="relative w-full h-full">
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={index === 0 ? 'high' : 'low'}
+                    decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-6 lg:p-12 transition-colors duration-500 group-hover:from-[#340B73]/90">
+                    <h3
+                        className="text-white text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 transform transition-transform duration-500 group-hover:translate-x-2"
+                        style={{ transform: 'translateZ(30px)' }}
+                    >
+                        {project.title}
+                    </h3>
+                    <p
+                        className="text-gray-300 text-base lg:text-xl transform transition-transform duration-500 delay-75 group-hover:translate-x-2"
+                        style={{ transform: 'translateZ(20px)' }}
+                    >
+                        {project.description}
+                    </p>
+                </div>
+                {/* Gloss overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            </div>
+        </div>
+    )
+}
+
 export default function ProjectsList() {
     return (
         <>
@@ -50,26 +114,7 @@ export default function ProjectsList() {
                     </div>
                 }
                 renderItem={(project, index) => (
-                    <div className="w-full max-w-5xl h-[52vh] lg:h-[74vh] bg-neutral-900 rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-2xl relative border border-white/10">
-                        <div className="relative w-full h-full">
-                            <img
-                                src={project.image}
-                                alt={project.title}
-                                className="w-full h-full object-cover"
-                                loading={index === 0 ? 'eager' : 'lazy'}
-                                fetchPriority={index === 0 ? 'high' : 'low'}
-                                decoding="async"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 lg:p-12">
-                                <h3 className="text-white text-2xl sm:text-3xl lg:text-5xl font-bold mb-2">
-                                    {project.title}
-                                </h3>
-                                <p className="text-gray-300 text-base lg:text-xl">
-                                    {project.description}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <TiltProjectCard project={project} index={index} key={project.id} />
                 )}
             />
 

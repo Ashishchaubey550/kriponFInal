@@ -63,16 +63,45 @@ function HomePage() {
                 keywords="digital agency India, web development India, app development Nepal, UI UX Bhutan, SEO and design agency South Asia"
                 schema={{
                     '@context': 'https://schema.org',
-                    '@type': 'WebPage',
-                    name: 'Kripon Digital Home',
-                    url: 'https://www.kripon.in/',
-                    description: 'Kripon Digital builds websites, apps and growth systems for brands in India, Nepal and Bhutan.',
-                    inLanguage: 'en',
-                    about: ['Web Development', 'App Development', 'UI/UX Design', 'Digital Growth'],
-                    audience: {
-                        '@type': 'Audience',
-                        geographicArea: ['India', 'Nepal', 'Bhutan']
-                    }
+                    '@graph': [
+                        {
+                            '@type': 'LocalBusiness',
+                            '@id': 'https://www.kripon.in/#organization',
+                            'name': 'Kripon Digital',
+                            'url': 'https://www.kripon.in/',
+                            'logo': 'https://www.kripon.in/favicon.ico',
+                            'telephone': '+917024306915',
+                            'priceRange': '$$',
+                            'address': {
+                                '@type': 'PostalAddress',
+                                'addressCountry': 'IN'
+                            },
+                            'sameAs': [
+                                'https://www.instagram.com/startups_media'
+                            ]
+                        },
+                        {
+                            '@type': 'FAQPage',
+                            'mainEntity': [
+                                {
+                                    '@type': 'Question',
+                                    'name': 'What services does Kripon Digital offer?',
+                                    'acceptedAnswer': {
+                                        '@type': 'Answer',
+                                        'text': 'We specialize in Custom Website Development, Mobile App Development (iOS & Android), UI/UX Design, and Digital Growth Strategy.'
+                                    }
+                                },
+                                {
+                                    '@type': 'Question',
+                                    'name': 'Do you work with clients outside India?',
+                                    'acceptedAnswer': {
+                                        '@type': 'Answer',
+                                        'text': 'Yes, while we are based in India, we actively serve clients globally including Nepal, Bhutan, and the US.'
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 }}
             />
             <CustomCursor />
