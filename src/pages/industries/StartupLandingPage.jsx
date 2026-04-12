@@ -3,7 +3,6 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
-import { Button } from '../../components/ui/button'
 import SeoMeta from '../../components/ui/SeoMeta'
 
 export default function StartupLandingPage() {
@@ -36,12 +35,12 @@ export default function StartupLandingPage() {
                         </p>
 
                         <div className="flex gap-4">
-                            <Button
+                            <button
                                 onClick={() => navigate('/contact')}
                                 className="h-14 px-8 rounded-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-400 hover:to-green-600 text-white font-bold text-lg shadow-[0_0_20px_rgba(37,211,102,0.4)]"
                             >
                                 Book Strategy Call
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 </section>
