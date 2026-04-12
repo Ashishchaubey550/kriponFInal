@@ -3,7 +3,6 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
-import { Button } from '../../components/ui/button'
 import SeoMeta from '../../components/ui/SeoMeta'
 
 export default function WebsiteServicePage() {
@@ -65,12 +64,12 @@ export default function WebsiteServicePage() {
                             transition={{ delay: 0.3 }}
                             className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
                         >
-                            <Button
+                            <button
                                 onClick={() => navigate('/contact')}
                                 className="h-14 px-8 rounded-full bg-gradient-to-r from-[#8A38F5] to-[#340B73] hover:from-[#B985FF] hover:to-[#8A38F5] text-white font-semibold text-lg transition-all shadow-[0_0_30px_rgba(138,56,245,0.3)] hover:scale-105"
                             >
                                 Get a Free Consultation
-                            </Button>
+                            </button>
                         </motion.div>
                     </div>
                 </section>

@@ -3,7 +3,6 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
-import { Button } from '../../components/ui/button'
 import SeoMeta from '../../components/ui/SeoMeta'
 
 export default function AppServicePage() {
@@ -67,12 +66,12 @@ export default function AppServicePage() {
                                 transition={{ delay: 0.3 }}
                                 className="flex flex-col sm:flex-row gap-4"
                             >
-                                <Button
+                                <button
                                     onClick={() => navigate('/contact')}
                                     className="h-14 px-8 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-lg transition-all shadow-[0_0_30px_rgba(37,99,235,0.3)] hover:scale-105"
                                 >
                                     Discuss Your App Idea
-                                </Button>
+                                </button>
                             </motion.div>
                         </div>
 
