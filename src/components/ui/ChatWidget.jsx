@@ -3,45 +3,64 @@ import { useNavigate } from 'react-router-dom'
 
 const CONVERSATION_TREE = {
     start: {
-        text: "Hi there! 👋 I'm Kripon's AI assistant. How can I help you grow your business today?",
+        text: "Hi there! 👋 I'm Kripon's advanced AI assistant. How can I empower your business today?",
         options: [
             { text: "I need a Website", nextId: "website" },
             { text: "I need an App", nextId: "app" },
             { text: "What's your pricing?", nextId: "pricing" },
+            { text: "I want to grow my brand", nextId: "marketing" },
             { text: "Just browsing", nextId: "browsing" }
         ]
     },
     website: {
-        text: "Awesome! We build lightning-fast, high-converting websites. Do you already have a design, or do you need a fresh re-design?",
+        text: "Awesome! We build lightning-fast, high-converting, and SEO-optimized websites. Do you already have a design in mind, or do you need a fresh, modern re-design?",
         options: [
             { text: "I need a new design", nextId: "action" },
-            { text: "I have a design", nextId: "action" }
+            { text: "I have a design", nextId: "action" },
+            { text: "I need an e-commerce site", nextId: "ecommerce" }
+        ]
+    },
+    ecommerce: {
+        text: "An e-commerce site is a great choice! We build secure, scalable, and easy-to-manage online stores. Ready to boost your sales?",
+        options: [
+            { text: "Yes, let's talk!", nextId: "action" },
+            { text: "Not yet", nextId: "browsing" }
         ]
     },
     app: {
-        text: "Great! We build native and cross-platform apps for iOS & Android. What platform are you targeting?",
+        text: "Great! We build powerful native and cross-platform apps for iOS & Android that users love. What platform are you targeting?",
         options: [
             { text: "Both iOS & Android", nextId: "action" },
-            { text: "Just Android", nextId: "action" }
+            { text: "Just Android", nextId: "action" },
+            { text: "Just iOS", nextId: "action" }
         ]
     },
     pricing: {
-        text: "Our custom packages typically start around ₹40,000 for standard websites, and scale based on features. What's your rough budget?",
+        text: "Our custom packages typically start around ₹40,000 algorithms for standard websites, and scale based on advanced features like AI integrations or complex app features. What's your rough budget?",
         options: [
             { text: "Below ₹50k", nextId: "action" },
             { text: "₹50k - ₹2L", nextId: "action" },
-            { text: "Above ₹2L", nextId: "action" }
+            { text: "Above ₹2L", nextId: "action" },
+            { text: "I need a custom quote", nextId: "action" }
+        ]
+    },
+    marketing: {
+        text: "Our digital marketing experts can help you reach a wider audience and increase your ROI through SEO, SMM, and targeted ad campaigns. What's your primary goal?",
+        options: [
+            { text: "More website traffic", nextId: "action" },
+            { text: "Higher conversion rates", nextId: "action" },
+            { text: "Brand awareness", nextId: "action" }
         ]
     },
     browsing: {
-        text: "No problem! Take your time checking out our latest projects or our blog. If anything catches your eye, just let me know! 🚀",
+        text: "No problem! Take your time checking out our latest projects or our blog. Our portfolio is filled with award-winning designs. If anything catches your eye, just let me know! 🚀",
         options: [
             { text: "I have a question", nextId: "start" },
-            { text: "Talk to a human", nextId: "action" }
+            { text: "Talk to an expert", nextId: "action" }
         ]
     },
     action: {
-        text: "Perfect! The best next step is to hop on a quick discovery call or chat with our experts on WhatsApp. How would you like to proceed?",
+        text: "Perfect! The best next step is to hop on a quick discovery call or chat with our experts on WhatsApp to discuss your vision in detail. How would you like to proceed?",
         isActions: true,
         options: [
             { text: "Start over", nextId: "start" }
@@ -118,26 +137,36 @@ export default function ChatWidget() {
                 setCurrentNode('app')
                 return
             }
+            if (lowerText.includes('marketing') || lowerText.includes('seo') || lowerText.includes('ads') || lowerText.includes('brand')) {
+                const node = CONVERSATION_TREE['marketing']
+                setMessages(prev => [...prev, { sender: 'bot', text: node.text, isActions: node.isActions }])
+                setCurrentNode('marketing')
+                return
+            }
 
             let botReply = ""
             let showActions = false
 
-            if (lowerText.includes('price') || lowerText.includes('cost') || lowerText.includes('money') || lowerText.includes('budget')) {
-                botReply = "Our custom projects range from ₹40,000 for standard websites to ₹2L+ for complex mobile apps. The exact cost depends entirely on the features you need. Would you like to consult our experts to get a direct quote?"
+            if (lowerText.includes('price') || lowerText.includes('cost') || lowerText.includes('money') || lowerText.includes('budget') || lowerText.includes('quote')) {
+                botReply = "Our custom projects range from ₹40,000 for standard, high-performing websites to ₹2L+ for complex mobile apps and AI-integrated solutions. The exact cost depends entirely on the robust features you need. Would you like to consult our experts to get a tailored direct quote?"
                 showActions = true
-            } else if (lowerText.includes('time') || lowerText.includes('how long') || lowerText.includes('when')) {
-                botReply = "Standard websites launch in 2-4 weeks. Complex mobile apps take 6-12 weeks depending on features."
+            } else if (lowerText.includes('time') || lowerText.includes('how long') || lowerText.includes('when') || lowerText.includes('duration')) {
+                botReply = "Standard, fully-optimized websites launch in 2-4 weeks. Complex mobile apps and scalable platforms take 6-12 weeks depending on features."
+                showActions = true
             } else if (lowerText.includes('founder') || lowerText.includes('owner') || lowerText.includes('who created')) {
                 botReply = "Kripon Digital was founded by Ashish Chaubey and his amazing team! They oversee all our premium software projects. Would you like to speak with the team?"
                 showActions = true
-            } else if (lowerText.includes('hello') || lowerText.includes('hi')) {
-                botReply = "Hello again! How can I help you today?"
-            } else if (lowerText.includes('thank') || lowerText.includes('ok') || lowerText.includes('cool') || lowerText.includes('awesome')) {
-                botReply = "You're very welcome! Feel free to explore our site, and let me know if you need anything else."
+            } else if (lowerText.includes('hello') || lowerText.includes('hi') || lowerText.includes('hey')) {
+                botReply = "Hello again! How can I empower your business today?"
+            } else if (lowerText.includes('thank') || lowerText.includes('ok') || lowerText.includes('cool') || lowerText.includes('awesome') || lowerText.includes('great')) {
+                botReply = "You're very welcome! Feel free to explore our site, and let me know if you need any further assistance. We're here to help you succeed."
             } else if (lowerText.includes('how are you')) {
-                botReply = "I'm doing great, thanks for asking! I'm here helping businesses grow. How can I help yours?"
+                botReply = "I'm doing fantastic, thanks for asking! I'm here helping ambitious businesses grow. How can I help yours reach the next level?"
+            } else if (lowerText.includes('services') || lowerText.includes('what do you do') || lowerText.includes('offer')) {
+                botReply = "We offer a wide range of premium services including Web Development, App Development, Custom Software Solutions, UI/UX Design, and Digital Marketing. What are you most interested in?"
+                showActions = true
             } else {
-                botReply = "I'm still learning! While I might not understand everything perfectly yet, I can definitely help you with our web, app, and design services. What would you like to explore?"
+                botReply = "I'm always learning and evolving! While I might not understand everything perfectly just yet, I can definitely help you with our advanced web, app, design, and marketing services. What would you like to explore?"
             }
 
             setMessages(prev => [...prev, {
