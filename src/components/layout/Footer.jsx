@@ -76,7 +76,7 @@ function Footer() {
                             <a href="tel:+917024306915" className="inline-flex items-center gap-2 text-white/90 transition-colors hover:text-[#B985FF]">
                                 {/* Call Icon */}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.72 19.72 0 0 1 3.09 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.73 3.06a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.99.36 2.01.6 3.06.73A2 2 0 0 1 22 16.92z" /></svg>
-                                +91 70243 06915
+                                +91 8823850908
                             </a>
                             <a href="https://wa.me/917024306915" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white/90 transition-colors hover:text-[#25D366]">
                                 {/* WhatsApp Icon */}
