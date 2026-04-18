@@ -4,15 +4,15 @@ const EMAIL_USER = process.env.EMAIL_USER
 const EMAIL_PASS = process.env.EMAIL_PASS
 
 function escapeHtml(str) {
-    return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
 }
 
 function buildNotificationHtml({ name, email, service, preferredDate, timeSlot, message, customRequirement, submittedAt, timezone, sourceUrl }) {
-    return `
+  return `
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +76,7 @@ function buildNotificationHtml({ name, email, service, preferredDate, timeSlot, 
 }
 
 function buildThankYouHtml(name) {
-    return `
+  return `
 <!DOCTYPE html>
 <html>
 <head>
@@ -126,50 +126,59 @@ function buildThankYouHtml(name) {
 }
 
 export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ success: false, message: 'Method not allowed' })
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, message: 'Method not allowed' })
+  }
+
+  if (!EMAIL_USER || !EMAIL_PASS) {
+    console.error('Missing EMAIL_USER or EMAIL_PASS environment variables')
+    return res.status(500).json({ success: false, message: 'Email service not configured.' })
+  }
+
+  const { name, email, service, preferredDate, timeSlot, message, customRequirement, submittedAt, timezone, sourceUrl } = req.body
+
+  if (!name || !email || !service || !message) {
+    return res.status(400).json({ success: false, message: 'Missing required fields: name, email, service, message.' })
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: 'smtpout.secureserver.net',
+    port: 465,
+    secure: true,
+    auth: {
+      user: EMAIL_USER,
+      pass: EMAIL_PASS
     }
+  })
 
-    if (!EMAIL_USER || !EMAIL_PASS) {
-        console.error('Missing EMAIL_USER or EMAIL_PASS environment variables')
-        return res.status(500).json({ success: false, message: 'Email service not configured.' })
-    }
-
-    const { name, email, service, preferredDate, timeSlot, message, customRequirement, submittedAt, timezone, sourceUrl } = req.body
-
-    if (!name || !email || !service || !message) {
-        return res.status(400).json({ success: false, message: 'Missing required fields: name, email, service, message.' })
-    }
-
-    const transporter = nodemailer.createTransport({
-        host: 'smtpout.secureserver.net',
-        port: 465,
-        secure: true,
-        auth: {
-            user: EMAIL_USER,
-            pass: EMAIL_PASS
-        }
+  try {
+    await transporter.sendMail({
+      from: `"Kripon Digital" <${EMAIL_USER}>`,
+      to: EMAIL_USER,
+      replyTo: email,
+      subject: `New Lead: ${service} — ${name}`,
+      html: buildNotificationHtml({ name, email, service, preferredDate, timeSlot, message, customRequirement, submittedAt, timezone, sourceUrl })
     })
 
-    try {
-        await transporter.sendMail({
-            from: `"Kripon Digital" <${EMAIL_USER}>`,
-            to: EMAIL_USER,
-            replyTo: email,
-            subject: `New Lead: ${service} — ${name}`,
-            html: buildNotificationHtml({ name, email, service, preferredDate, timeSlot, message, customRequirement, submittedAt, timezone, sourceUrl })
-        })
+    await transporter.sendMail({
+      from: `"Kripon Digital" <${EMAIL_USER}>`,
+      to: email,
+      subject: `Thank you for reaching out — Kripon Digital`,
+      html: buildThankYouHtml(name)
+    })
 
-        await transporter.sendMail({
-            from: `"Kripon Digital" <${EMAIL_USER}>`,
-            to: email,
-            subject: `Thank you for reaching out — Kripon Digital`,
-            html: buildThankYouHtml(name)
-        })
-
-        return res.status(200).json({ success: true, message: 'Emails sent successfully.' })
-    } catch (error) {
-        console.error('Email send error:', error)
-        return res.status(500).json({ success: false, message: 'Failed to send email. Please try again later.' })
-    }
+    return res.status(200).json({ success: true, message: 'Emails sent successfully.' })
+  } catch (error) {
+    console.error('Email send error:', error)
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to send email. Please try again later.',
+      debug: {
+        errorMessage: error.message,
+        code: error.code,
+        response: error.response,
+        command: error.command
+      }
+    })
+  }
 }
