@@ -17,14 +17,16 @@ function LeadPopup() {
         // Show after 15 seconds if they haven't dismissed it
         const timer = setTimeout(() => {
             if (!hasDismissed) {
-                setIsVisible(true)
+                // Feature disabled by user request
+                // setIsVisible(true)
             }
         }, 15000)
 
         // Exit intent detection (cursor leaves viewport)
         const handleMouseLeave = (e) => {
             if (e.clientY <= 0 && !hasDismissed && !isVisible) {
-                setIsVisible(true)
+                // Feature disabled by user request
+                // setIsVisible(true)
             }
         }
 
