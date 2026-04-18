@@ -26,7 +26,8 @@ const projects = [
         title: 'Discover Tranquility',
         description: 'Spa and wellness center',
         image: sparkluminarius,
-        color: '#3a3a3a'
+        color: '#3a3a3a',
+        link: 'https://www.thesparkluminaires.com/'
     },
     {
         id: 4,
@@ -58,8 +59,14 @@ function TiltProjectCard({ project, index }) {
         }
     }
 
+    const isClickable = !!project.link;
+    const Component = isClickable ? 'a' : 'div';
+
     return (
-        <div
+        <Component
+            href={isClickable ? project.link : undefined}
+            target={isClickable ? "_blank" : undefined}
+            rel={isClickable ? "noopener noreferrer" : undefined}
             ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -68,7 +75,7 @@ function TiltProjectCard({ project, index }) {
                 willChange: 'transform',
                 transition: 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
             }}
-            className="w-full max-w-5xl h-[52vh] lg:h-[74vh] bg-neutral-900 rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)] hover:shadow-[0_40px_80px_-15px_rgba(138,56,245,0.2)] relative border border-white/10 group"
+            className={`w-full max-w-5xl h-[52vh] lg:h-[74vh] bg-neutral-900 rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)] hover:shadow-[0_40px_80px_-15px_rgba(138,56,245,0.2)] relative border border-white/10 group ${isClickable ? 'block cursor-pointer' : ''}`}
         >
             <div className="relative w-full h-full">
                 <img
@@ -92,11 +99,19 @@ function TiltProjectCard({ project, index }) {
                     >
                         {project.description}
                     </p>
+                    {isClickable && (
+                        <p
+                            className="text-white/80 text-sm mt-4 font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-2"
+                            style={{ transform: 'translateZ(10px)' }}
+                        >
+                            Click to view &rarr;
+                        </p>
+                    )}
                 </div>
                 {/* Gloss overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             </div>
-        </div>
+        </Component>
     )
 }
 
